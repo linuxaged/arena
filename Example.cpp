@@ -260,7 +260,7 @@ int main( int argc, char * argv[] )
 			statsAccumulator -= 0.25f;
 		}
 
-		wait( DeltaTime );
+		net::wait( DeltaTime );
 	}
 	
 	ShutdownSockets();
