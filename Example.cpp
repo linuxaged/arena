@@ -11,7 +11,7 @@
 
 #include "Net.h"
 
-//#define SHOW_ACKS
+#define SHOW_ACKS
 
 using namespace std;
 using namespace net;
