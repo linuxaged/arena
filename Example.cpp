@@ -8,6 +8,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
+// c++11 sleep
+#include <thread>
+#include <chrono>
 
 #include "Net.h"
 
@@ -131,8 +134,8 @@ int main( int argc, char * argv[] )
 
 	if ( argc >= 2 )
 	{
-		int a,b,c,d;
-		if ( sscanf( argv[1], "%d.%d.%d.%d", &a, &b, &c, &d ) )
+		unsigned char a,b,c,d;
+		if ( sscanf( argv[1], "%s.%s.%s.%s", &a, &b, &c, &d ) )
 		{
 			mode = Client;
 			address = Address(a,b,c,d,ServerPort);
@@ -259,8 +262,9 @@ int main( int argc, char * argv[] )
 			
 			statsAccumulator -= 0.25f;
 		}
-
-		net::wait( DeltaTime );
+		//
+		std::this_thread::sleep_for(std::chrono::seconds(x));
+		// net::wait( DeltaTime );
 	}
 	
 	ShutdownSockets();

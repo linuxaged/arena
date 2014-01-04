@@ -48,21 +48,21 @@
 
 namespace net
 {
+	#include <unistd.h>
 	// platform independent wait for n seconds
 
-#if PLATFORM == PLATFORM_WINDOWS
+// #if PLATFORM == PLATFORM_WINDOWS
 
-	void wait( float seconds )
-	{
-		Sleep( (int) ( seconds * 1000.0f ) );
-	}
+// 	void wait( float seconds )
+// 	{
+// 		Sleep( (int) ( seconds * 1000.0f ) );
+// 	}
 
-#else
+// #else
 
-	#include <unistd.h>
-	void wait( float seconds ) { usleep( (int) ( seconds * 1000000.0f ) ); }
+// 	void wait( float seconds ) { usleep( (int) ( seconds * 1000000.0f ) ); }
 
-#endif
+// #endif
 
 	// internet address
 
@@ -72,55 +72,55 @@ namespace net
 	
 		Address()
 		{
-			address = 0;
-			port = 0;
+			_address = 0;
+			_port = 0;
 		}
 	
 		Address( unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned short port )
 		{
-			this->address = ( a << 24 ) | ( b << 16 ) | ( c << 8 ) | d;
-			this->port = port;
+			this->_address = (unsigned int)( ( a << 24 ) | ( b << 16 ) | ( c << 8 ) | d );
+			this->_port = port;
 		}
 	
 		Address( unsigned int address, unsigned short port )
 		{
-			this->address = address;
-			this->port = port;
+			this->_address = address;
+			this->_port = port;
 		}
 	
 		unsigned int GetAddress() const
 		{
-			return address;
+			return _address;
 		}
 	
 		unsigned char GetA() const
 		{
-			return ( unsigned char ) ( address >> 24 );
+			return ( unsigned char ) ( _address >> 24 );
 		}
 	
 		unsigned char GetB() const
 		{
-			return ( unsigned char ) ( address >> 16 );
+			return ( unsigned char ) ( _address >> 16 );
 		}
 	
 		unsigned char GetC() const
 		{
-			return ( unsigned char ) ( address >> 8 );
+			return ( unsigned char ) ( _address >> 8 );
 		}
 	
 		unsigned char GetD() const
 		{
-			return ( unsigned char ) ( address );
+			return ( unsigned char ) ( _address );
 		}
 	
 		unsigned short GetPort() const
 		{ 
-			return port;
+			return _port;
 		}
 	
 		bool operator == ( const Address & other ) const
 		{
-			return address == other.address && port == other.port;
+			return _address == other._address && _port == other._port;
 		}
 	
 		bool operator != ( const Address & other ) const
@@ -131,18 +131,18 @@ namespace net
 		bool operator < ( const Address & other ) const
 		{
 			// note: this is so we can use address as a key in std::map
-			if ( address < other.address )
+			if ( _address < other._address )
 				return true;
-			if ( address > other.address )
+			if ( _address > other._address )
 				return false;
 			else
-				return port < other.port;
+				return _port < other._port;
 		}
 	
 	private:
 	
-		unsigned int address;
-		unsigned short port;
+		unsigned int _address;
+		unsigned short _port;
 	};
 
 	// sockets
