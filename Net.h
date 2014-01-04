@@ -44,7 +44,7 @@ namespace net
 {
 	#include <unistd.h>
 	#include <netinet/in.h> // htonl
-	#include <cstring>
+	#include <string.h>
 	// platform independent wait for n seconds
 
 // #if PLATFORM == PLATFORM_WINDOWS
