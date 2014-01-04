@@ -2,7 +2,7 @@
 # or use command like:
 # clang++ -std=c++11  -stdlib=libc++ -Weverything Server.cpp
 # to compile single file
-flags = -std=c++11  -stdlib=libc++ -Weverything
+flags = -std=c++11  -stdlib=libc++
 
 % : %.cpp Net.h
 	clang++ $< -o $@ ${flags}

@@ -1,9 +1,3 @@
-/*
-	Simple Network Library from "Networking for Game Programmers"
-	http://www.gaffer.org/networking-for-game-programmers
-	Author: Glenn Fiedler <gaffer@gaffer.org>
-*/
-
 #ifndef NET_H
 #define NET_H
 
@@ -49,6 +43,8 @@
 namespace net
 {
 	#include <unistd.h>
+	#include <netinet/in.h> // htonl
+
 	// platform independent wait for n seconds
 
 // #if PLATFORM == PLATFORM_WINDOWS
@@ -197,7 +193,7 @@ namespace net
 
 			sockaddr_in address;
 			address.sin_family = AF_INET;
-			address.sin_addr.s_addr = INADDR_ANY;
+			address.sin_addr.s_addr = htonl(INADDR_ANY);
 			address.sin_port = htons( (unsigned short) port );
 		
 			if ( bind( socket, (const sockaddr*) &address, sizeof(sockaddr_in) ) < 0 )
@@ -334,7 +330,7 @@ namespace net
 				Stop();
 		}
 		
-		bool Start( int port )
+		bool Start( unsigned short port )
 		{
 			assert( !running );
 			printf( "start connection on port %d\n", port );
@@ -541,7 +537,7 @@ namespace net
 
 	inline bool sequence_more_recent( unsigned int s1, unsigned int s2, unsigned int max_sequence )
 	{
-		return ( s1 > s2 ) && ( s1 - s2 <= max_sequence/2 ) || ( s2 > s1 ) && ( s2 - s1 > max_sequence/2 );
+		return (( s1 > s2 ) && ( s1 - s2 <= max_sequence/2 )) || (( s2 > s1 ) && ( s2 - s1 > max_sequence/2 ));
 	}		
 	
 	class PacketQueue : public std::list<PacketData>
@@ -612,7 +608,6 @@ namespace net
 		
 		ReliabilitySystem( unsigned int max_sequence = 0xFFFFFFFF )
 		{
-			this->rtt_maximum = rtt_maximum;
 			this->max_sequence = max_sequence;
 			Reset();
 		}
@@ -704,7 +699,7 @@ namespace net
 
 		static bool sequence_more_recent( unsigned int s1, unsigned int s2, unsigned int max_sequence )
 		{
-			return ( s1 > s2 ) && ( s1 - s2 <= max_sequence/2 ) || ( s2 > s1 ) && ( s2 - s1 > max_sequence/2 );
+			return (( s1 > s2 ) && ( s1 - s2 <= max_sequence/2 )) || (( s2 > s1 ) && ( s2 - s1 > max_sequence/2 ));
 		}
 		
 		static int bit_index_for_sequence( unsigned int sequence, unsigned int ack, unsigned int max_sequence )

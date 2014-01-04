@@ -1,9 +1,3 @@
-/*
-	Reliability and Flow Control Example
-	From "Networking for Game Programmers" - http://www.gaffer.org/networking-for-game-programmers
-	Author: Glenn Fiedler <gaffer@gaffer.org>
-*/
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -19,8 +13,8 @@
 using namespace std;
 using namespace net;
 
-const int ServerPort = 30000;
-const int ClientPort = 30001;
+const unsigned short ServerPort = 30000;
+const unsigned short ClientPort = 30001;
 const int ProtocolId = 0x11223344;
 const float DeltaTime = 1.0f / 30.0f;
 const float SendRate = 1.0f / 30.0f;
@@ -152,7 +146,7 @@ int main( int argc, char * argv[] )
 
 	ReliableConnection connection( ProtocolId, TimeOut );
 	
-	const int port = mode == Server ? ServerPort : ClientPort;
+	const unsigned short port = mode == Server ? ServerPort : ClientPort;
 	
 	if ( !connection.Start( port ) )
 	{
