@@ -843,8 +843,9 @@ void test_ack_bits()
 	
 	ReliableConnection client( ProtocolId, TimeOut );
 	ReliableConnection server( ProtocolId, TimeOut );
-	
+	printf("a\n");
 	check( client.Start( ClientPort ) );
+	printf("b\n");
 	check( server.Start( ServerPort ) );
 	
 	client.Connect( Address(127,0,0,1,ServerPort ) );
