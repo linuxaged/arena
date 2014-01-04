@@ -742,6 +742,7 @@ void test_acks()
  	bool serverAckedPackets[PacketCount];
 	for ( unsigned int i = 0; i < PacketCount; ++i )
 	{
+		printf("%d\n", i);
 		clientAckedPackets[i] = false;
 		serverAckedPackets[i] = false;
 	}
@@ -940,7 +941,7 @@ void test_ack_bits()
 			if ( serverAckedPackets[i] )
 				serverAckCount++;
 		}
-//		printf( "client ack count = %d, server ack count = %d\n", clientAckCount, serverAckCount );
+		printf( "client ack count = %d, server ack count = %d\n", clientAckCount, serverAckCount );
 		allPacketsAcked = clientAckCount == PacketCount && serverAckCount == PacketCount;
 		
 		server.Update( DeltaTime );
