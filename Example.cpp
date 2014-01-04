@@ -15,11 +15,18 @@ using namespace net;
 
 const unsigned short ServerPort = 30000;
 const unsigned short ClientPort = 30001;
-const int ProtocolId = 0x11223344;
-const float DeltaTime = 1.0f / 30.0f;
-const float SendRate = 1.0f / 30.0f;
-const float TimeOut = 10.0f;
+const int ProtocolId = 0x11112222;
+const float DeltaTime = 0.001f;
+const float SendRate = 0.001f;
+const float TimeOut = 0.1f;
 const int PacketSize = 256;
+
+	// const int ServerPort = 30000;
+	// const int ClientPort = 30001;
+	// const int ProtocolId = 0x11112222;
+	// const float DeltaTime = 0.001f;
+	// const float TimeOut = 0.1f;
+	// const unsigned int PacketCount = 100;
 
 class FlowControl
 {
