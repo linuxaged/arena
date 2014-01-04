@@ -742,7 +742,6 @@ void test_acks()
  	bool serverAckedPackets[PacketCount];
 	for ( unsigned int i = 0; i < PacketCount; ++i )
 	{
-		printf("%d\n", i);
 		clientAckedPackets[i] = false;
 		serverAckedPackets[i] = false;
 	}
@@ -883,6 +882,7 @@ void test_ack_bits()
 				int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 				if ( bytes_read == 0 )
 					break;
+				printf("0\n");
 				check( bytes_read == sizeof(packet) );
 				for ( unsigned int i = 0; i < sizeof(packet); ++i )
 					check( packet[i] == (unsigned char) i );
@@ -891,6 +891,7 @@ void test_ack_bits()
 			int ack_count = 0;
 			unsigned int * acks = NULL;
 			client.GetReliabilitySystem().GetAcks( &acks, ack_count );
+			printf("1\n");
 			check( ack_count == 0 || ack_count != 0 && acks );
 			for ( int i = 0; i < ack_count; ++i )
 			{
@@ -913,6 +914,7 @@ void test_ack_bits()
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
+			printf("2\n");
 			check( bytes_read == sizeof(packet) );
 			for ( unsigned int i = 0; i < sizeof(packet); ++i )
 				check( packet[i] == (unsigned char) i );
@@ -927,6 +929,7 @@ void test_ack_bits()
 			unsigned int ack = acks[i];
 			if ( ack < PacketCount )
 			{
+				printf("3\n");
 				check( !serverAckedPackets[ack] );
 				serverAckedPackets[ack] = true;
 			}
@@ -946,7 +949,7 @@ void test_ack_bits()
 		
 		server.Update( DeltaTime );
 	}
-	
+	printf("4\n");
 	check( client.IsConnected() );
 	check( server.IsConnected() );
 }
