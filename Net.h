@@ -431,7 +431,7 @@ namespace net
 				}
 			}
 		}
-		
+		// 添加4字节的 协议ID 后发送
 		virtual bool SendPacket( const unsigned char data[], int size )
 		{
 			assert( running );
