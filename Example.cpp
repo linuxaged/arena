@@ -264,7 +264,7 @@ int main( int argc, char * argv[] )
 			statsAccumulator -= 0.25f;
 		}
 		//
-		std::this_thread::sleep_for(std::chrono::seconds(x));
+		std::this_thread::sleep_for(std::chrono::seconds(DeltaTime));
 		// net::wait( DeltaTime );
 	}
 	
