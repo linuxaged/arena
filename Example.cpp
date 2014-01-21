@@ -17,7 +17,7 @@ const unsigned short ServerPort = 30000;
 const unsigned short ClientPort = 30001;
 const int ProtocolId = 0x11112222;
 const float DeltaTime = 0.001f;
-const chrono::seconds DeltaTimeInSeconds(DeltaTime);
+const chrono::milliseconds DeltaTimeInMs(1);
 const float SendRate = 0.001f;
 const float TimeOut = 0.1f;
 const int PacketSize = 256;
@@ -227,8 +227,8 @@ int main( int argc, char * argv[] )
 		
 		#ifdef SHOW_ACKS
 		uint32_t * acks = NULL;
-		int ack_count = 0;
-		connection.GetReliabilitySystem().GetAcks( &acks, ack_count );
+		uint32_t ack_count = 0;
+		connection.GetReliabilitySystem().GetAcks( &acks, &ack_count );
 		if ( ack_count > 0 )
 		{
 			printf( "acks: %d", acks[0] );
@@ -264,8 +264,8 @@ int main( int argc, char * argv[] )
 			
 			statsAccumulator -= 0.25f;
 		}
-		//
-		std::this_thread::sleep_for(DeltaTimeInSeconds);
+		// c++11 sleep 1 ms
+		this_thread::sleep_for(DeltaTimeInMs);
 		// net::wait( DeltaTime );
 	}
 	
