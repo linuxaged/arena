@@ -17,6 +17,7 @@ const unsigned short ServerPort = 30000;
 const unsigned short ClientPort = 30001;
 const int ProtocolId = 0x11112222;
 const float DeltaTime = 0.001f;
+const chrono::seconds DeltaTimeInSeconds(DeltaTime);
 const float SendRate = 0.001f;
 const float TimeOut = 0.1f;
 const int PacketSize = 256;
@@ -26,7 +27,7 @@ const int PacketSize = 256;
 	// const int ProtocolId = 0x11112222;
 	// const float DeltaTime = 0.001f;
 	// const float TimeOut = 0.1f;
-	// const unsigned int PacketCount = 100;
+	// const uint32_t PacketCount = 100;
 
 class FlowControl
 {
@@ -225,7 +226,7 @@ int main( int argc, char * argv[] )
 		// show packets that were acked this frame
 		
 		#ifdef SHOW_ACKS
-		unsigned int * acks = NULL;
+		uint32_t * acks = NULL;
 		int ack_count = 0;
 		connection.GetReliabilitySystem().GetAcks( &acks, ack_count );
 		if ( ack_count > 0 )
@@ -249,9 +250,9 @@ int main( int argc, char * argv[] )
 		{
 			float rtt = connection.GetReliabilitySystem().GetRoundTripTime();
 			
-			unsigned int sent_packets = connection.GetReliabilitySystem().GetSentPackets();
-			unsigned int acked_packets = connection.GetReliabilitySystem().GetAckedPackets();
-			unsigned int lost_packets = connection.GetReliabilitySystem().GetLostPackets();
+			uint32_t sent_packets = connection.GetReliabilitySystem().GetSentPackets();
+			uint32_t acked_packets = connection.GetReliabilitySystem().GetAckedPackets();
+			uint32_t lost_packets = connection.GetReliabilitySystem().GetLostPackets();
 			
 			float sent_bandwidth = connection.GetReliabilitySystem().GetSentBandwidth();
 			float acked_bandwidth = connection.GetReliabilitySystem().GetAckedBandwidth();
@@ -264,7 +265,7 @@ int main( int argc, char * argv[] )
 			statsAccumulator -= 0.25f;
 		}
 		//
-		std::this_thread::sleep_for(std::chrono::seconds(DeltaTime));
+		std::this_thread::sleep_for(DeltaTimeInSeconds);
 		// net::wait( DeltaTime );
 	}
 	
