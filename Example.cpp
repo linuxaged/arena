@@ -226,9 +226,8 @@ int main( int argc, char * argv[] )
 		// show packets that were acked this frame
 		
 		#ifdef SHOW_ACKS
-		uint32_t * acks = NULL;
-		uint32_t ack_count = 0;
-		connection.GetReliabilitySystem().GetAcks( &acks, &ack_count );
+		uint32_t * acks = nullptr;
+		uint32_t ack_count = connection.GetReliabilitySystem().GetAcks( &acks, &ack_count );
 		if ( ack_count > 0 )
 		{
 			printf( "acks: %d", acks[0] );

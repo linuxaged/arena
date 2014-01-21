@@ -787,10 +787,11 @@ public:
         return max_sequence;
     }
 
-    void GetAcks( uint32_t **acks, uint32_t &count )
+    uint32_t GetAcks( uint32_t **acks)
     {
         *acks = &this->acks[0];
-        count = (uint32_t) this->acks.size();
+        uint32_t count = (uint32_t) this->acks.size();
+        return count;
     }
 
     uint32_t GetSentPackets() const
