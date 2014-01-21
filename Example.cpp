@@ -18,7 +18,6 @@ const unsigned short ClientPort = 30001;
 const int ProtocolId = 0x11112222;
 const float DeltaTime = 0.001f;
 const chrono::milliseconds DeltaTimeInMs(1);
-const float SendRate = 0.001f;
 const float TimeOut = 0.1f;
 const int PacketSize = 256;
 
@@ -231,7 +230,7 @@ int main( int argc, char * argv[] )
 		if ( ack_count > 0 )
 		{
 			printf( "acks: %d", acks[0] );
-			for ( int i = 1; i < ack_count; ++i )
+			for ( uint32_t i = 1; i < ack_count; ++i )
 				printf( ",%d", acks[i] );
 			printf( "\n" );
 		}

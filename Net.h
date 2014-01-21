@@ -50,14 +50,12 @@ static_assert(sizeof(float) == 4, "sizeof(float) == 4");
 #include <map>
 #include <stack>
 #include <list>
-#include <algorithm>
+#include <algorithm> // std::copy
 #include <functional>
-
 namespace net
 {
 #include <unistd.h>
 #include <netinet/in.h> // htonl
-#include <string.h>
 
 // internet address
 class Address
@@ -440,7 +438,7 @@ public:
         packet[1] = (uchar_t) ( ( protocolId >> 16 ) & 0xFF );
         packet[2] = (uchar_t) ( ( protocolId >> 8 ) & 0xFF );
         packet[3] = (uchar_t) ( ( protocolId ) & 0xFF );
-        memcpy( &packet[4], data, size );
+        std::copy( packet, packet + 4, data );
         return socket.Send( address, packet, size + 4 );
     }
 
@@ -476,7 +474,8 @@ public:
                 OnConnect();
             }
             timeoutAccumulator = 0.0f;
-            memcpy( data, &packet[4], bytes_read - 4 );
+            // memcpy( data, &packet[4], bytes_read - 4 );
+            std::copy( data, data + bytes_read - 4, &packet[4]);
             return bytes_read - 4;
         }
         return 0;
@@ -959,7 +958,8 @@ public:
         uint32_t ack = reliabilitySystem.GetRemoteSequence();
         uint32_t ack_bits = reliabilitySystem.GenerateAckBits();
         WriteHeader( packet, seq, ack, ack_bits );
-        memcpy( packet + header, data, size );
+        // memcpy( packet + header, data, size );
+        std::copy( packet + header, packet + header + size, data );
         if ( !Connection::SendPacket( packet, size + header ) )
             return false;
         reliabilitySystem.PacketSent( size );
@@ -983,7 +983,8 @@ public:
         ReadHeader( packet, packet_sequence, packet_ack, packet_ack_bits );
         reliabilitySystem.PacketReceived( packet_sequence, received_bytes - header );
         reliabilitySystem.ProcessAck( packet_ack, packet_ack_bits );
-        memcpy( data, packet + header, received_bytes - header );
+        // memcpy( data, packet + header, received_bytes - header );
+        std::copy( data, data + received_bytes - header, packet + header);
         return received_bytes - header;
     }
 
