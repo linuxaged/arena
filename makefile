@@ -7,8 +7,8 @@ flags = -std=c++11 -stdlib=libstdc++
 % : %.cpp Net.h
 	clang++ $< -o $@ ${flags}
 
-test : Test
-	./Test
+# test : Test
+# 	./Test
 	
 server : Example
 	./Example

@@ -42,7 +42,7 @@
 // uint32_t
 // uint64_t
 using uchar_t = unsigned char;
-static_assert(sizeof(float) != 4, "sizeof(float) != 4");
+static_assert(sizeof(float) == 4, "sizeof(float) == 4");
 #include <cstdint>
 
 #include <assert.h>
