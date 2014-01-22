@@ -135,7 +135,7 @@ int main( int argc, char * argv[] )
 
 	if ( argc >= 2 )
 	{
-		unsigned char a,b,c,d;
+		uchar_t a,b,c,d;
 		if ( sscanf( argv[1], "%s.%s.%s.%s", &a, &b, &c, &d ) )
 		{
 			mode = Client;
@@ -208,7 +208,7 @@ int main( int argc, char * argv[] )
 		
 		while ( sendAccumulator > 1.0f / sendRate )
 		{
-			unsigned char packet[PacketSize];
+			uchar_t packet[PacketSize];
 			memset( packet, 0, sizeof( packet ) );
 			connection.SendPacket( packet, sizeof( packet ) );
 			sendAccumulator -= 1.0f / sendRate;
@@ -216,7 +216,7 @@ int main( int argc, char * argv[] )
 		
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = connection.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
