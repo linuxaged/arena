@@ -6,7 +6,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <cstring>
 #include <vector>
 
 #define NET_UNIT_TEST
