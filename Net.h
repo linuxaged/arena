@@ -41,7 +41,7 @@
 // uint16_t
 // uint32_t
 // uint64_t
-using uchar_t = unsigned char;
+using uchar_t = char;
 static_assert(sizeof(float) == 4, "sizeof(float) == 4");
 #include <cstdint>
 

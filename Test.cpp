@@ -340,15 +340,15 @@ void test_join()
 		if ( !client.IsConnecting() && client.ConnectFailed() )
 			break;
 		
-		unsigned char client_packet[] = "client to server";
+		uchar_t client_packet[] = "client to server";
 		client.SendPacket( client_packet, sizeof( client_packet ) );
 
-		unsigned char server_packet[] = "server to client";
+		uchar_t server_packet[] = "server to client";
 		server.SendPacket( server_packet, sizeof( server_packet ) );
 		
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -356,7 +356,7 @@ void test_join()
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -393,12 +393,12 @@ void test_join_timeout()
 		if ( !client.IsConnecting() )
 			break;
 		
-		unsigned char client_packet[] = "client to server";
+		uchar_t client_packet[] = "client to server";
 		client.SendPacket( client_packet, sizeof( client_packet ) );
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -442,15 +442,15 @@ void test_join_busy()
 		if ( !client.IsConnecting() && client.ConnectFailed() )
 			break;
 		
-		unsigned char client_packet[] = "client to server";
+		uchar_t client_packet[] = "client to server";
 		client.SendPacket( client_packet, sizeof( client_packet ) );
 
-		unsigned char server_packet[] = "server to client";
+		uchar_t server_packet[] = "server to client";
 		server.SendPacket( server_packet, sizeof( server_packet ) );
 		
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -458,7 +458,7 @@ void test_join_busy()
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -482,18 +482,18 @@ void test_join_busy()
 		if ( !busy.IsConnecting() || busy.IsConnected() )
 			break;
 		
-		unsigned char client_packet[] = "client to server";
+		uchar_t client_packet[] = "client to server";
 		client.SendPacket( client_packet, sizeof( client_packet ) );
 
-		unsigned char server_packet[] = "server to client";
+		uchar_t server_packet[] = "server to client";
 		server.SendPacket( server_packet, sizeof( server_packet ) );
 		
-		unsigned char busy_packet[] = "i'm so busy!";
+		uchar_t busy_packet[] = "i'm so busy!";
 		busy.SendPacket( busy_packet, sizeof( busy_packet ) );
 		
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -501,7 +501,7 @@ void test_join_busy()
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -509,7 +509,7 @@ void test_join_busy()
 		
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = busy.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -557,15 +557,15 @@ void test_rejoin()
 		if ( !client.IsConnecting() && client.ConnectFailed() )
 			break;
 		
-		unsigned char client_packet[] = "client to server";
+		uchar_t client_packet[] = "client to server";
 		client.SendPacket( client_packet, sizeof( client_packet ) );
 
-		unsigned char server_packet[] = "server to client";
+		uchar_t server_packet[] = "server to client";
 		server.SendPacket( server_packet, sizeof( server_packet ) );
 		
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -573,7 +573,7 @@ void test_rejoin()
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -592,7 +592,7 @@ void test_rejoin()
 	{
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -600,7 +600,7 @@ void test_rejoin()
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -625,15 +625,15 @@ void test_rejoin()
 		if ( !client.IsConnecting() && client.ConnectFailed() )
 			break;
 		
-		unsigned char client_packet[] = "client to server";
+		uchar_t client_packet[] = "client to server";
 		client.SendPacket( client_packet, sizeof( client_packet ) );
 
-		unsigned char server_packet[] = "server to client";
+		uchar_t server_packet[] = "server to client";
 		server.SendPacket( server_packet, sizeof( server_packet ) );
 		
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -641,7 +641,7 @@ void test_rejoin()
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
@@ -684,28 +684,37 @@ void test_payload()
 		if ( !client.IsConnecting() && client.ConnectFailed() )
 			break;
 		
-		unsigned char client_packet[] = "client to server";
+		uchar_t client_packet[] = "client to server";
 		client.SendPacket( client_packet, sizeof( client_packet ) );
 
-		unsigned char server_packet[] = "server to client";
+		uchar_t server_packet[] = "server to client";
 		server.SendPacket( server_packet, sizeof( server_packet ) );
 		
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
+			printf("bytes_read0 %d\n", bytes_read);
 			if ( bytes_read == 0 )
 				break;
-			check( strcmp( (const char*) packet, "server to client" ) == 0 );
+			// check( strcmp( packet, "server to client" ) == 0 );
+			check( strcmp( packet, server_packet ) == 0 );
 		}
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
+			printf("bytes_read1 %d\n", bytes_read);
 			if ( bytes_read == 0 )
 				break;
-			check( strcmp( (const char*) packet, "client to server" ) == 0 );
+			for(int i=0; i<18; i++)
+			{
+				printf("%c", packet[i]);
+			}
+			printf("\n");
+			// check( strcmp( packet, "client to server" ) == 0 );
+			check( strcmp( packet, client_packet ) == 0 );
 		}
 		
 		client.Update( DeltaTime );
@@ -756,33 +765,33 @@ void test_acks()
 		if ( allPacketsAcked )
 			break;
 		
-		unsigned char packet[256];
+		uchar_t packet[256];
 		for ( unsigned int i = 0; i < sizeof(packet); ++i )
-			packet[i] = (unsigned char) i;
+			packet[i] = (uchar_t) i;
 		
 		server.SendPacket( packet, sizeof(packet) );
 		client.SendPacket( packet, sizeof(packet) );
 		
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
 			check( bytes_read == sizeof(packet) );
 			for ( unsigned int i = 0; i < sizeof(packet); ++i )
-				check( packet[i] == (unsigned char) i );
+				check( packet[i] == (uchar_t) i );
 		}
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
 			check( bytes_read == sizeof(packet) );
 			for ( unsigned int i = 0; i < sizeof(packet); ++i )
-				check( packet[i] == (unsigned char) i );
+				check( packet[i] == (uchar_t) i );
 		}
 		
 		int ack_count = 0;
@@ -869,9 +878,9 @@ void test_ack_bits()
 		if ( allPacketsAcked )
 			break;
 		
-		unsigned char packet[256];
+		uchar_t packet[256];
 		for ( unsigned int i = 0; i < sizeof(packet); ++i )
-			packet[i] = (unsigned char) i;
+			packet[i] = (uchar_t) i;
 
 		for ( int i = 0; i < 10; ++i )
 		{
@@ -879,14 +888,14 @@ void test_ack_bits()
 			
 			while ( true )
 			{
-				unsigned char packet[256];
+				uchar_t packet[256];
 				int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 				if ( bytes_read == 0 )
 					break;
 				printf("0\n");
 				check( bytes_read == sizeof(packet) );
 				for ( unsigned int i = 0; i < sizeof(packet); ++i )
-					check( packet[i] == (unsigned char) i );
+					check( packet[i] == (uchar_t) i );
 			}
 
 			int ack_count = 0;
@@ -911,14 +920,14 @@ void test_ack_bits()
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
 			printf("2\n");
 			check( bytes_read == sizeof(packet) );
 			for ( unsigned int i = 0; i < sizeof(packet); ++i )
-				check( packet[i] == (unsigned char) i );
+				check( packet[i] == (uchar_t) i );
 		}
 
 		int ack_count = 0;
@@ -998,9 +1007,9 @@ void test_packet_loss()
 		if ( allPacketsAcked )
 			break;
 		
-		unsigned char packet[256];
+		uchar_t packet[256];
 		for ( unsigned int i = 0; i < sizeof(packet); ++i )
-			packet[i] = (unsigned char) i;
+			packet[i] = (uchar_t) i;
 
 		for ( int i = 0; i < 10; ++i )
 		{
@@ -1008,13 +1017,13 @@ void test_packet_loss()
 			
 			while ( true )
 			{
-				unsigned char packet[256];
+				uchar_t packet[256];
 				int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 				if ( bytes_read == 0 )
 					break;
 				check( bytes_read == sizeof(packet) );
 				for ( unsigned int i = 0; i < sizeof(packet); ++i )
-					check( packet[i] == (unsigned char) i );
+					check( packet[i] == (uchar_t) i );
 			}
 
 			int ack_count = 0;
@@ -1039,13 +1048,13 @@ void test_packet_loss()
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
 			check( bytes_read == sizeof(packet) );
 			for ( unsigned int i = 0; i < sizeof(packet); ++i )
-				check( packet[i] == (unsigned char) i );
+				check( packet[i] == (uchar_t) i );
 		}
 
 		int ack_count = 0;
@@ -1127,33 +1136,33 @@ void test_sequence_wrap_around()
 		if ( allPacketsAcked )
 			break;
 
-		unsigned char packet[256];
+		uchar_t packet[256];
 		for ( unsigned int i = 0; i < sizeof(packet); ++i )
-			packet[i] = (unsigned char) i;
+			packet[i] = (uchar_t) i;
 
 		server.SendPacket( packet, sizeof(packet) );
 		client.SendPacket( packet, sizeof(packet) );
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
 			check( bytes_read == sizeof(packet) );
 			for ( unsigned int i = 0; i < sizeof(packet); ++i )
-				check( packet[i] == (unsigned char) i );
+				check( packet[i] == (uchar_t) i );
 		}
 
 		while ( true )
 		{
-			unsigned char packet[256];
+			uchar_t packet[256];
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
 			check( bytes_read == sizeof(packet) );
 			for ( unsigned int i = 0; i < sizeof(packet); ++i )
-				check( packet[i] == (unsigned char) i );
+				check( packet[i] == (uchar_t) i );
 		}
 
 		int ack_count = 0;
