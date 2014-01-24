@@ -438,7 +438,7 @@ public:
         packet[1] = (uchar_t) ( ( protocolId >> 16 ) & 0xFF );
         packet[2] = (uchar_t) ( ( protocolId >> 8 ) & 0xFF );
         packet[3] = (uchar_t) ( ( protocolId ) & 0xFF );
-        std::copy( packet, packet + 4, data );
+        std::copy( data, data + 4, &packet[size] );
         return socket.Send( address, packet, size + 4 );
     }
 
@@ -959,7 +959,7 @@ public:
         uint32_t ack_bits = reliabilitySystem.GenerateAckBits();
         WriteHeader( packet, seq, ack, ack_bits );
         // memcpy( packet + header, data, size );
-        std::copy( packet + header, packet + header + size, data );
+        std::copy( data, data + size, &packet[header] );
         if ( !Connection::SendPacket( packet, size + header ) )
             return false;
         reliabilitySystem.PacketSent( size );
