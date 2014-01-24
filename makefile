@@ -4,8 +4,8 @@
 # to compile single file
 # clang
 # flags = -std=c++11 -stdlib=libstdc++ -Weverything -DDEBUG
-# gcc
-flags = -std=c++11 -Wall -DDEBUG
+# gcc -DMEMCPY
+flags = -std=c++11 -Wall -DDEBUG -DMEMCPY
 % : %.cpp Net.h
 	g++ $< -o $@ ${flags}
 

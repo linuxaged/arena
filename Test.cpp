@@ -852,9 +852,7 @@ void test_ack_bits()
 	
 	ReliableConnection client( ProtocolId, TimeOut );
 	ReliableConnection server( ProtocolId, TimeOut );
-	printf("a\n");
 	check( client.Start( ClientPort ) );
-	printf("b\n");
 	check( server.Start( ServerPort ) );
 	
 	client.Connect( Address(127,0,0,1,ServerPort ) );
@@ -892,7 +890,6 @@ void test_ack_bits()
 				int bytes_read = client.ReceivePacket( packet, sizeof(packet) );
 				if ( bytes_read == 0 )
 					break;
-				printf("0\n");
 				check( bytes_read == sizeof(packet) );
 				for ( unsigned int i = 0; i < sizeof(packet); ++i )
 					check( packet[i] == (uchar_t) i );
@@ -901,7 +898,6 @@ void test_ack_bits()
 			int ack_count = 0;
 			unsigned int * acks = NULL;
 			client.GetReliabilitySystem().GetAcks( &acks, ack_count );
-			printf("1\n");
 			check( ack_count == 0 || ack_count != 0 && acks );
 			for ( int i = 0; i < ack_count; ++i )
 			{
@@ -924,7 +920,6 @@ void test_ack_bits()
 			int bytes_read = server.ReceivePacket( packet, sizeof(packet) );
 			if ( bytes_read == 0 )
 				break;
-			printf("2\n");
 			check( bytes_read == sizeof(packet) );
 			for ( unsigned int i = 0; i < sizeof(packet); ++i )
 				check( packet[i] == (uchar_t) i );
@@ -939,7 +934,6 @@ void test_ack_bits()
 			unsigned int ack = acks[i];
 			if ( ack < PacketCount )
 			{
-				printf("3\n");
 				check( !serverAckedPackets[ack] );
 				serverAckedPackets[ack] = true;
 			}
@@ -959,7 +953,6 @@ void test_ack_bits()
 		
 		server.Update( DeltaTime );
 	}
-	printf("4\n");
 	check( client.IsConnected() );
 	check( server.IsConnected() );
 }
@@ -1035,6 +1028,7 @@ void test_packet_loss()
 				unsigned int ack = acks[i];
 				if ( ack < PacketCount )
 				{
+					printf("%d\n", ack);
 					check( !clientAckedPackets[ack] );
 					check ( ( ack & 1 ) == 0 );
 					clientAckedPackets[ack] = true;

@@ -16,8 +16,8 @@ using namespace net;
 const unsigned short ServerPort = 30000;
 const unsigned short ClientPort = 30001;
 const int ProtocolId = 0x11112222;
-const float DeltaTime = 0.001f;
-const chrono::milliseconds DeltaTimeInMs(1);
+const float DeltaTime = 0.01f;
+const chrono::milliseconds DeltaTimeInMs(10);
 const float TimeOut = 0.1f;
 const int PacketSize = 256;
 

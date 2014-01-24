@@ -52,6 +52,7 @@ static_assert(sizeof(float) == 4, "sizeof(float) == 4");
 #include <list>
 #include <algorithm> // std::copy
 #include <functional>
+#include <cstring>
 namespace net
 {
 #include <unistd.h>
@@ -260,7 +261,7 @@ public:
         address.sin_addr.s_addr = htonl( destination.GetAddress() );
         address.sin_port = htons( (unsigned short) destination.GetPort() );
 
-        int sent_bytes = sendto( socket, (const char *)data, size, 0, (sockaddr *)&address, sizeof(sockaddr_in) );
+        int sent_bytes = sendto( socket, data, size, 0, (sockaddr *)&address, sizeof(sockaddr_in) );
 
         return sent_bytes == size;
     }
@@ -280,7 +281,7 @@ public:
         sockaddr_in from;
         socklen_t fromLength = sizeof( from );
 
-        int received_bytes = recvfrom( socket, (char *)data, size, 0, (sockaddr *)&from, &fromLength );
+        int received_bytes = recvfrom( socket, data, size, 0, (sockaddr *)&from, &fromLength );
 
         if ( received_bytes <= 0 )
             return 0;
@@ -438,7 +439,11 @@ public:
         packet[1] = (uchar_t) ( ( protocolId >> 16 ) & 0xFF );
         packet[2] = (uchar_t) ( ( protocolId >> 8 ) & 0xFF );
         packet[3] = (uchar_t) ( ( protocolId ) & 0xFF );
-        std::copy( data, data + 4, &packet[size] );
+        #ifdef MEMCPY
+        memcpy( &packet[4], data, size );
+        #else
+        std::copy( data, data + size, &packet[4] );
+        #endif
         return socket.Send( address, packet, size + 4 );
     }
 
@@ -474,8 +479,11 @@ public:
                 OnConnect();
             }
             timeoutAccumulator = 0.0f;
-            // memcpy( data, &packet[4], bytes_read - 4 );
-            std::copy( data, data + bytes_read - 4, &packet[4]);
+            #ifdef MEMCPY
+            memcpy( data, &packet[4], bytes_read - 4 );
+            #else
+            std::copy( &packet[4], &packet[4] + bytes_read - 4, data);
+            #endif
             return bytes_read - 4;
         }
         return 0;
@@ -957,8 +965,11 @@ public:
         uint32_t ack = reliabilitySystem.GetRemoteSequence();
         uint32_t ack_bits = reliabilitySystem.GenerateAckBits();
         WriteHeader( packet, seq, ack, ack_bits );
-        // memcpy( packet + header, data, size );
+        #ifdef MEMCPY
+        memcpy( packet + header, data, size );
+        #else
         std::copy( data, data + size, &packet[header] );
+        #endif
         if ( !Connection::SendPacket( packet, size + header ) )
             return false;
         reliabilitySystem.PacketSent( size );
@@ -982,8 +993,11 @@ public:
         ReadHeader( packet, packet_sequence, packet_ack, packet_ack_bits );
         reliabilitySystem.PacketReceived( packet_sequence, received_bytes - header );
         reliabilitySystem.ProcessAck( packet_ack, packet_ack_bits );
-        // memcpy( data, packet + header, received_bytes - header );
-        std::copy( data, data + received_bytes - header, packet + header);
+        #ifdef MEMCPY
+        memcpy( data, packet + header, received_bytes - header );
+        #else
+        std::copy( packet + header, packet + received_bytes, data);
+        #endif
         return received_bytes - header;
     }
 
