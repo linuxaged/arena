@@ -41,7 +41,7 @@
 // uint16_t
 // uint32_t
 // uint64_t
-using uchar_t = char;
+using uchar_t = unsigned char;
 static_assert(sizeof(float) == 4, "sizeof(float) == 4");
 #include <cstdint>
 
@@ -71,8 +71,14 @@ public:
 
     Address( uchar_t a, uchar_t b, uchar_t c, uchar_t d, unsigned short port )
     {
-        printf("%hhu\n", a);
-        this->_address = a<<24 | b<<16 | c<<8 | d;
+        this->_address = (uint32_t)(a<<24);
+        printf("1]%x\n", this->_address);
+        this->_address |= (uint32_t)(b<<16);
+        printf("2]%x\n", this->_address);
+        this->_address |= (uint32_t)(c<<8);
+        printf("3]%x\n", this->_address);
+        this->_address |= (uint32_t)d;
+        printf("4]%x\n", this->_address);
         printf("%x\n", this->_address);
         this->_port = port;
     }
