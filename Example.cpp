@@ -136,10 +136,15 @@ int main( int argc, char * argv[] )
 	if ( argc >= 2 )
 	{
 		uchar_t a,b,c,d;
-		if ( sscanf( argv[1], "%s.%s.%s.%s", &a, &b, &c, &d ) )
+		if ( sscanf( argv[1], "%hhu.%hhu.%hhu.%hhu", &a, &b, &c, &d ) > 0 )
 		{
 			mode = Client;
 			address = Address(a,b,c,d,ServerPort);
+			printf("sscanf address ok, address = %hhu,%hhu,%hhu,%hhu\n", a,b,c,d);
+		}
+		else
+		{
+			printf("sscanf error\n");
 		}
 	}
 
