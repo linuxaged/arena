@@ -3,11 +3,11 @@
 # clang++ -std=c++11  -stdlib=libc++ -Weverything Server.cpp
 # to compile single file
 # clang
-# flags = -std=c++11 -stdlib=libstdc++ -Weverything -DDEBUG
+flags = -std=c++11 -stdlib=libstdc++ -Weverything -DDEBUG
 # gcc -DMEMCPY
-flags = -std=c++11 -Wall -DDEBUG -DMEMCPY
+# flags = -std=c++11 -Wall -DDEBUG -DMEMCPY
 % : %.cpp Net.h
-	g++ $< -o $@ ${flags}
+	clang++ $< -o $@ ${flags}
 
 test : Test
 	./Test

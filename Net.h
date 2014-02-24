@@ -62,6 +62,13 @@ namespace net
 class Address
 {
 public:
+
+    Address()
+    {
+        _address = 0;
+        _port = 0;
+    }
+
     Address( uchar_t a, uchar_t b, uchar_t c, uchar_t d, unsigned short port )
     {
         this->_address = (uint32_t)(a<<24);
