@@ -71,10 +71,10 @@ public:
 
     Address( uchar_t a, uchar_t b, uchar_t c, uchar_t d, unsigned short port )
     {
-        this->_address = (uint32_t)(a<<24);
-        this->_address |= (uint32_t)(b<<16);
-        this->_address |= (uint32_t)(c<<8);
-        this->_address |= (uint32_t)d;
+        this->_address = static_cast<uint32_t>(a<<24);
+        this->_address |= static_cast<uint32_t>(b<<16);
+        this->_address |= static_cast<uint32_t>(c<<8);
+        this->_address |= static_cast<uint32_t>(d);
         printf("%x\n", this->_address);
         this->_port = port;
     }
@@ -92,22 +92,22 @@ public:
 
     uchar_t GetA() const
     {
-        return ( uchar_t ) ( _address >> 24 );
+        return static_cast<uint32_t>( _address >> 24 );
     }
 
     uchar_t GetB() const
     {
-        return ( uchar_t ) ( _address >> 16 );
+        return static_cast<uint32_t>( _address >> 16 );
     }
 
     uchar_t GetC() const
     {
-        return ( uchar_t ) ( _address >> 8 );
+        return static_cast<uint32_t>( _address >> 8 );
     }
 
     uchar_t GetD() const
     {
-        return ( uchar_t ) ( _address );
+        return static_cast<uint32_t>( _address );
     }
 
     unsigned short GetPort() const
@@ -195,7 +195,7 @@ public:
         sockaddr_in address;
         address.sin_family = AF_INET;
         address.sin_addr.s_addr = htonl(INADDR_ANY);
-        address.sin_port = htons( (unsigned short) port );
+        address.sin_port = htons( static_cast<uint32_t>(port) );
 
         if ( bind( socket, (const sockaddr *) &address, sizeof(sockaddr_in) ) < 0 )
         {
@@ -263,9 +263,9 @@ public:
         sockaddr_in address;
         address.sin_family = AF_INET;
         address.sin_addr.s_addr = htonl( destination.GetAddress() );
-        address.sin_port = htons( (unsigned short) destination.GetPort() );
+        address.sin_port = htons( static_cast<uint32_t>(destination.GetPort()) );
 
-        int sent_bytes = sendto( socket, data, size, 0, (sockaddr *)&address, sizeof(sockaddr_in) );
+        int sent_bytes = sendto( socket, data, static_cast<size_t>(size), 0, (sockaddr *)&address, sizeof(sockaddr_in) );
 
         return sent_bytes == size;
     }
@@ -439,10 +439,10 @@ public:
         if ( address.GetAddress() == 0 )
             return false;
         uchar_t packet[size + 4];
-        packet[0] = (uchar_t) ( protocolId >> 24 );
-        packet[1] = (uchar_t) ( ( protocolId >> 16 ) & 0xFF );
-        packet[2] = (uchar_t) ( ( protocolId >> 8 ) & 0xFF );
-        packet[3] = (uchar_t) ( ( protocolId ) & 0xFF );
+        packet[0] = static_cast<uchar_t>( protocolId >> 24 );
+        packet[1] = static_cast<uchar_t>( ( protocolId >> 16 ) & 0xFF );
+        packet[2] = static_cast<uchar_t>( ( protocolId >> 8 ) & 0xFF );
+        packet[3] = static_cast<uchar_t>( ( protocolId ) & 0xFF );
         #ifdef MEMCPY
         memcpy( &packet[4], data, size );
         #else
@@ -461,10 +461,10 @@ public:
             return 0;
         if ( bytes_read <= 4 )
             return 0;
-        if ( packet[0] != (uchar_t) ( protocolId >> 24 ) ||
-                packet[1] != (uchar_t) ( ( protocolId >> 16 ) & 0xFF ) ||
-                packet[2] != (uchar_t) ( ( protocolId >> 8 ) & 0xFF ) ||
-                packet[3] != (uchar_t) ( protocolId & 0xFF ) )
+        if ( packet[0] != static_cast<uchar_t>( protocolId >> 24 ) ||
+                packet[1] != static_cast<uchar_t>( ( protocolId >> 16 ) & 0xFF ) ||
+                packet[2] != static_cast<uchar_t>( ( protocolId >> 8 ) & 0xFF ) ||
+                packet[3] != static_cast<uchar_t>( protocolId & 0xFF ) )
             return 0;
         if ( mode == Server && !IsConnected() )
         {
@@ -798,10 +798,10 @@ public:
         return max_sequence;
     }
 
-    uint32_t GetAcks( uint32_t **acks, int& ack_count )
+    void GetAcks( uint32_t **acks, uint32_t& ack_count )
     {
         *acks = &this->acks[0];
-        ack_count = (uint32_t) this->acks.size();
+        ack_count = static_cast<uint32_t>(this->acks.size());
     }
 
     uint32_t GetSentPackets() const
