@@ -198,7 +198,7 @@ public:
         address.sin_addr.s_addr = htonl(INADDR_ANY);
         address.sin_port = htons( static_cast<uint32_t>(port) );
 
-        if ( bind( socket, static_cast<const sockaddr_in *>(&address), sizeof(sockaddr_in) ) < 0 )
+        if ( bind( socket, static_cast<const sockaddr *>(&address), sizeof(sockaddr_in) ) < 0 )
         {
             printf( "failed to bind socket\n" );
             Close();
@@ -266,7 +266,7 @@ public:
         address.sin_addr.s_addr = htonl( destination.GetAddress() );
         address.sin_port = htons( static_cast<uint32_t>(destination.GetPort()) );
 
-        int sent_bytes = sendto( socket, data, static_cast<SIZE_T>(size), 0, static_cast<sockaddr*>(&address), sizeof(sockaddr_in) );
+        int sent_bytes = sendto( socket, data, size, 0, static_cast<sockaddr*>(&address), sizeof(sockaddr_in) );
 
         return sent_bytes == size;
     }
