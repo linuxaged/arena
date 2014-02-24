@@ -231,7 +231,7 @@ int main( int argc, char * argv[] )
 		
 		#ifdef SHOW_ACKS
 		uint32_t * acks = nullptr;
-		int ack_count = 0;
+		uint32_t ack_count = 0;
 		connection.GetReliabilitySystem().GetAcks( &acks, ack_count);
 		if ( ack_count > 0 )
 		{

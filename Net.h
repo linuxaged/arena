@@ -42,6 +42,7 @@
 // uint32_t
 // uint64_t
 using uchar_t = unsigned char;
+using size_t = uint32_t;
 static_assert(sizeof(float) == 4, "sizeof(float) == 4");
 #include <cstdint>
 
@@ -92,22 +93,22 @@ public:
 
     uchar_t GetA() const
     {
-        return static_cast<uint32_t>( _address >> 24 );
+        return static_cast<uchar_t>( _address >> 24 );
     }
 
     uchar_t GetB() const
     {
-        return static_cast<uint32_t>( _address >> 16 );
+        return static_cast<uchar_t>( _address >> 16 );
     }
 
     uchar_t GetC() const
     {
-        return static_cast<uint32_t>( _address >> 8 );
+        return static_cast<uchar_t>( _address >> 8 );
     }
 
     uchar_t GetD() const
     {
-        return static_cast<uint32_t>( _address );
+        return static_cast<uchar_t>( _address );
     }
 
     unsigned short GetPort() const
@@ -138,8 +139,8 @@ public:
 
 private:
 
-    uint32_t _address{0};
-    unsigned short _port{0};
+    uint32_t _address;
+    unsigned short _port;
 };
 
 // sockets
@@ -197,7 +198,7 @@ public:
         address.sin_addr.s_addr = htonl(INADDR_ANY);
         address.sin_port = htons( static_cast<uint32_t>(port) );
 
-        if ( bind( socket, (const sockaddr *) &address, sizeof(sockaddr_in) ) < 0 )
+        if ( bind( socket, static_cast<const sockaddr *>(&address), sizeof(sockaddr_in) ) < 0 )
         {
             printf( "failed to bind socket\n" );
             Close();
@@ -249,7 +250,7 @@ public:
         return socket != 0;
     }
 
-    bool Send( const Address &destination, const void *data, int size )
+    bool Send( const Address &destination, const void *data, size_t size )
     {
         assert( data );
         assert( size > 0 );
@@ -270,7 +271,7 @@ public:
         return sent_bytes == size;
     }
 
-    int Receive( Address &sender, void *data, int size )
+    int Receive( Address &sender, void *data, size_t size )
     {
         assert( data );
         assert( size > 0 );
@@ -433,7 +434,7 @@ public:
         }
     }
     // 添加4字节的 协议ID 后发送
-    virtual bool SendPacket( const uchar_t data[], int size )
+    virtual bool SendPacket( const uchar_t data[], size_t size )
     {
         assert( running );
         if ( address.GetAddress() == 0 )
@@ -451,7 +452,7 @@ public:
         return socket.Send( address, packet, size + 4 );
     }
 
-    virtual int ReceivePacket( uchar_t data[], int size )
+    virtual int ReceivePacket( uchar_t data[], size_t size )
     {
         assert( running );
         uchar_t packet[size + 4];
@@ -541,7 +542,7 @@ struct PacketData
 {
     uint32_t sequence;          // packet sequence number
     float time;                     // time offset since packet was sent or received (depending on context)
-    int size;                       // packet size in bytes
+    size_t size;                       // packet size in bytes
 };
 
 inline bool sequence_more_recent( uint32_t s1, uint32_t s2, uint32_t max_sequence )
@@ -639,7 +640,7 @@ public:
         rtt_maximum = 1.0f;
     }
 
-    void PacketSent( int size )
+    void PacketSent( size_t size )
     {
         if ( sentQueue.exists( local_sequence ) )
         {
@@ -661,7 +662,7 @@ public:
             local_sequence = 0;
     }
 
-    void PacketReceived( uint32_t sequence, int size )
+    void PacketReceived( uint32_t sequence, size_t size )
     {
         recv_packets++;
         if ( receivedQueue.exists( sequence ) )
@@ -953,8 +954,7 @@ public:
     }
 
     // overriden functions from "Connection"
-
-    bool SendPacket( const uchar_t data[], int size )
+    bool SendPacket( const uchar_t data[], size_t size )
     {
 #ifdef NET_UNIT_TEST
         if ( reliabilitySystem.GetLocalSequence() & packet_loss_mask )
@@ -980,7 +980,7 @@ public:
         return true;
     }
 
-    int ReceivePacket( uchar_t data[], int size )
+    int ReceivePacket( uchar_t data[], size_t size )
     {
         const int header = 12;
         if ( size <= header )
@@ -1049,8 +1049,11 @@ protected:
 
     void ReadInteger( const uchar_t *data, uint32_t &value )
     {
-        value = ( ( (uint32_t)data[0] << 24 ) | ( (uint32_t)data[1] << 16 ) |
-                  ( (uint32_t)data[2] << 8 )  | ( (uint32_t)data[3] ) );
+        value = ( (static_cast<uint32_t>(data[0] << 24)) |
+                  (static_cast<uint32_t>(data[1] << 16)) |
+                  (static_cast<uint32_t>(data[2] << 8 )) |
+                  (static_cast<uint32_t>(data[3]      ))
+                );
     }
 
     void ReadHeader( const uchar_t *header, uint32_t &sequence, uint32_t &ack, uint32_t &ack_bits )
