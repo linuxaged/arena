@@ -801,7 +801,7 @@ public:
 
     void GetAcks( uint32_t **ACKs, uint32_t& ack_count )
     {
-        *acks = &this->ACKs[0];
+        *ACKs = &this->acks[0];
         ack_count = static_cast<uint32_t>(this->acks.size());
     }
 
