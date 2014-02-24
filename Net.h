@@ -198,7 +198,7 @@ public:
         address.sin_addr.s_addr = htonl(INADDR_ANY);
         address.sin_port = htons( static_cast<uint32_t>(port) );
 
-        if ( bind( socket, static_cast<const sockaddr *>(&address), sizeof(sockaddr_in) ) < 0 )
+        if ( bind( socket, (sockaddr *)(&address), sizeof(sockaddr_in) ) < 0 )
         {
             printf( "failed to bind socket\n" );
             Close();
@@ -266,7 +266,7 @@ public:
         address.sin_addr.s_addr = htonl( destination.GetAddress() );
         address.sin_port = htons( static_cast<uint32_t>(destination.GetPort()) );
 
-        int sent_bytes = sendto( socket, data, size, 0, static_cast<sockaddr*>(&address), sizeof(sockaddr_in) );
+        int sent_bytes = sendto( socket, data, size, 0, (sockaddr*)(&address), sizeof(sockaddr_in) );
 
         return sent_bytes == size;
     }
@@ -1034,10 +1034,10 @@ protected:
 
     void WriteInteger( uchar_t *data, uint32_t value )
     {
-        data[0] = (uchar_t) ( value >> 24 );
-        data[1] = (uchar_t) ( ( value >> 16 ) & 0xFF );
-        data[2] = (uchar_t) ( ( value >> 8 ) & 0xFF );
-        data[3] = (uchar_t) ( value & 0xFF );
+        data[0] = static_cast<uchar_t>( value >> 24 );
+        data[1] = static_cast<uchar_t>( ( value >> 16 ) & 0xFF );
+        data[2] = static_cast<uchar_t>( ( value >> 8 ) & 0xFF );
+        data[3] = static_cast<uchar_t>( value & 0xFF );
     }
 
     void WriteHeader( uchar_t *header, uint32_t sequence, uint32_t ack, uint32_t ack_bits )
