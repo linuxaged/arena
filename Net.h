@@ -62,23 +62,12 @@ namespace net
 class Address
 {
 public:
-
-    Address()
-    {
-        _address = 0;
-        _port = 0;
-    }
-
     Address( uchar_t a, uchar_t b, uchar_t c, uchar_t d, unsigned short port )
     {
         this->_address = (uint32_t)(a<<24);
-        printf("1]%x\n", this->_address);
         this->_address |= (uint32_t)(b<<16);
-        printf("2]%x\n", this->_address);
         this->_address |= (uint32_t)(c<<8);
-        printf("3]%x\n", this->_address);
         this->_address |= (uint32_t)d;
-        printf("4]%x\n", this->_address);
         printf("%x\n", this->_address);
         this->_port = port;
     }
@@ -142,8 +131,8 @@ public:
 
 private:
 
-    uint32_t _address;
-    unsigned short _port;
+    uint32_t _address{0};
+    unsigned short _port{0};
 };
 
 // sockets
