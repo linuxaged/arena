@@ -73,9 +73,13 @@ public:
     Address( uchar_t a, uchar_t b, uchar_t c, uchar_t d, unsigned short port )
     {
         this->_address = static_cast<uint32_t>(a<<24);
+        printf("1]%x\n", _address);
         this->_address |= static_cast<uint32_t>(b<<16);
+        printf("2]%x\n", _address);
         this->_address |= static_cast<uint32_t>(c<<8);
+        printf("3]%x\n", _address);
         this->_address |= static_cast<uint32_t>(d);
+        printf("4]%x\n", _address);
         printf("%x\n", this->_address);
         this->_port = port;
     }
@@ -93,6 +97,7 @@ public:
 
     uchar_t GetA() const
     {
+        printf("address = %x\n", _address);
         return static_cast<uchar_t>( _address >> 24 );
     }
 
@@ -319,7 +324,7 @@ public:
 
     Connection( uint32_t pID, float TO )
     {
-        this->protocolId = protocolId;
+        this->protocolId = pID;
         this->timeout = TO;
         mode = None;
         running = false;
@@ -372,10 +377,10 @@ public:
         state = Listening;
     }
 
-    void Connect( const Address &addr )
+    void Connect( const Address& addr )
     {
         printf( "client connecting to %hhu.%hhu.%hhu.%hhu:%d\n",
-                address.GetA(), address.GetB(), address.GetC(), address.GetD(), address.GetPort() );
+                addr.GetA(), addr.GetB(), addr.GetC(), addr.GetD(), addr.GetPort() );
         bool connected = IsConnected();
         ClearData();
         if ( connected )
@@ -463,9 +468,9 @@ public:
         if ( bytes_read <= 4 )
             return 0;
         if ( packet[0] != static_cast<uchar_t>( protocolId >> 24 ) ||
-                packet[1] != static_cast<uchar_t>( ( protocolId >> 16 ) & 0xFF ) ||
-                packet[2] != static_cast<uchar_t>( ( protocolId >> 8 ) & 0xFF ) ||
-                packet[3] != static_cast<uchar_t>( protocolId & 0xFF ) )
+             packet[1] != static_cast<uchar_t>( ( protocolId >> 16 ) & 0xFF ) ||
+             packet[2] != static_cast<uchar_t>( ( protocolId >> 8 ) & 0xFF ) ||
+             packet[3] != static_cast<uchar_t>( protocolId & 0xFF ) )
             return 0;
         if ( mode == Server && !IsConnected() )
         {
