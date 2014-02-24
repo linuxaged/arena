@@ -196,7 +196,7 @@ public:
         sockaddr_in address;
         address.sin_family = AF_INET;
         address.sin_addr.s_addr = htonl(INADDR_ANY);
-        address.sin_port = htons( static_cast<uint32_t>(port) );
+        address.sin_port = htons(static_cast<uint16_t>(port));
 
         if ( bind( socket, (sockaddr *)(&address), sizeof(sockaddr_in) ) < 0 )
         {
@@ -264,7 +264,7 @@ public:
         sockaddr_in address;
         address.sin_family = AF_INET;
         address.sin_addr.s_addr = htonl( destination.GetAddress() );
-        address.sin_port = htons( static_cast<uint32_t>(destination.GetPort()) );
+        address.sin_port = htons( static_cast<uint16_t>(destination.GetPort()) );
 
         int sent_bytes = sendto( socket, data, size, 0, (sockaddr*)(&address), sizeof(sockaddr_in) );
 
@@ -317,10 +317,10 @@ public:
         Server
     };
 
-    Connection( uint32_t protocolId, float timeout )
+    Connection( uint32_t pID, float TO )
     {
         this->protocolId = protocolId;
-        this->timeout = timeout;
+        this->timeout = TO;
         mode = None;
         running = false;
         ClearData();
@@ -372,7 +372,7 @@ public:
         state = Listening;
     }
 
-    void Connect( const Address &address )
+    void Connect( const Address &addr )
     {
         printf( "client connecting to %hhu.%hhu.%hhu.%hhu:%d\n",
                 address.GetA(), address.GetB(), address.GetC(), address.GetD(), address.GetPort() );
@@ -382,7 +382,7 @@ public:
             OnDisconnect();
         mode = Client;
         state = Connecting;
-        this->address = address;
+        this->address = addr;
     }
 
     bool IsConnecting() const
@@ -799,9 +799,9 @@ public:
         return max_sequence;
     }
 
-    void GetAcks( uint32_t **acks, uint32_t& ack_count )
+    void GetAcks( uint32_t **ACKs, uint32_t& ack_count )
     {
-        *acks = &this->acks[0];
+        *acks = &this->ACKs[0];
         ack_count = static_cast<uint32_t>(this->acks.size());
     }
 

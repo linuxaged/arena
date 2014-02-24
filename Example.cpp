@@ -263,7 +263,7 @@ int main( int argc, char * argv[] )
 			
 			printf( "rtt %.1fms, sent %d, acked %d, lost %d (%.1f%%), sent bandwidth = %.1fkbps, acked bandwidth = %.1fkbps\n", 
 				rtt * 1000.0f, sent_packets, acked_packets, lost_packets, 
-				sent_packets > 0.0f ? (float) lost_packets / (float) sent_packets * 100.0f : 0.0f, 
+				sent_packets > 0.0f ? static_cast<float>(lost_packets) / static_cast<float>(sent_packets * 100.0f) : 0.0f, 
 				sent_bandwidth, acked_bandwidth );
 			
 			statsAccumulator -= 0.25f;
