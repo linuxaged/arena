@@ -42,7 +42,7 @@
 // uint32_t
 // uint64_t
 using uchar_t = unsigned char;
-using size_t = uint32_t;
+using SIZE_T = uint32_t;
 static_assert(sizeof(float) == 4, "sizeof(float) == 4");
 #include <cstdint>
 
@@ -198,7 +198,7 @@ public:
         address.sin_addr.s_addr = htonl(INADDR_ANY);
         address.sin_port = htons( static_cast<uint32_t>(port) );
 
-        if ( bind( socket, static_cast<const sockaddr *>(&address), sizeof(sockaddr_in) ) < 0 )
+        if ( bind( socket, static_cast<const sockaddr_in *>(&address), sizeof(sockaddr_in) ) < 0 )
         {
             printf( "failed to bind socket\n" );
             Close();
@@ -250,7 +250,7 @@ public:
         return socket != 0;
     }
 
-    bool Send( const Address &destination, const void *data, size_t size )
+    bool Send( const Address &destination, const void *data, SIZE_T size )
     {
         assert( data );
         assert( size > 0 );
@@ -266,12 +266,12 @@ public:
         address.sin_addr.s_addr = htonl( destination.GetAddress() );
         address.sin_port = htons( static_cast<uint32_t>(destination.GetPort()) );
 
-        int sent_bytes = sendto( socket, data, static_cast<size_t>(size), 0, (sockaddr *)&address, sizeof(sockaddr_in) );
+        int sent_bytes = sendto( socket, data, static_cast<SIZE_T>(size), 0, static_cast<sockaddr*>(&address), sizeof(sockaddr_in) );
 
         return sent_bytes == size;
     }
 
-    int Receive( Address &sender, void *data, size_t size )
+    int Receive( Address &sender, void *data, SIZE_T size )
     {
         assert( data );
         assert( size > 0 );
@@ -434,7 +434,7 @@ public:
         }
     }
     // 添加4字节的 协议ID 后发送
-    virtual bool SendPacket( const uchar_t data[], size_t size )
+    virtual bool SendPacket( const uchar_t data[], SIZE_T size )
     {
         assert( running );
         if ( address.GetAddress() == 0 )
@@ -452,7 +452,7 @@ public:
         return socket.Send( address, packet, size + 4 );
     }
 
-    virtual int ReceivePacket( uchar_t data[], size_t size )
+    virtual int ReceivePacket( uchar_t data[], SIZE_T size )
     {
         assert( running );
         uchar_t packet[size + 4];
@@ -542,7 +542,7 @@ struct PacketData
 {
     uint32_t sequence;          // packet sequence number
     float time;                     // time offset since packet was sent or received (depending on context)
-    size_t size;                       // packet size in bytes
+    SIZE_T size;                       // packet size in bytes
 };
 
 inline bool sequence_more_recent( uint32_t s1, uint32_t s2, uint32_t max_sequence )
@@ -640,7 +640,7 @@ public:
         rtt_maximum = 1.0f;
     }
 
-    void PacketSent( size_t size )
+    void PacketSent( SIZE_T size )
     {
         if ( sentQueue.exists( local_sequence ) )
         {
@@ -662,7 +662,7 @@ public:
             local_sequence = 0;
     }
 
-    void PacketReceived( uint32_t sequence, size_t size )
+    void PacketReceived( uint32_t sequence, SIZE_T size )
     {
         recv_packets++;
         if ( receivedQueue.exists( sequence ) )
@@ -954,7 +954,7 @@ public:
     }
 
     // overriden functions from "Connection"
-    bool SendPacket( const uchar_t data[], size_t size )
+    bool SendPacket( const uchar_t data[], SIZE_T size )
     {
 #ifdef NET_UNIT_TEST
         if ( reliabilitySystem.GetLocalSequence() & packet_loss_mask )
@@ -980,7 +980,7 @@ public:
         return true;
     }
 
-    int ReceivePacket( uchar_t data[], size_t size )
+    int ReceivePacket( uchar_t data[], SIZE_T size )
     {
         const int header = 12;
         if ( size <= header )
