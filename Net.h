@@ -72,11 +72,11 @@ public:
 
     Address( uchar_t a, uchar_t b, uchar_t c, uchar_t d, unsigned short port )
     {
-        this->_address = static_cast<uint32_t>(a<<24);
+        this->_address = static_cast<uint32_t>(a << 24);
         printf("1]%x\n", _address);
-        this->_address |= static_cast<uint32_t>(b<<16);
+        this->_address |= static_cast<uint32_t>(b << 16);
         printf("2]%x\n", _address);
-        this->_address |= static_cast<uint32_t>(c<<8);
+        this->_address |= static_cast<uint32_t>(c << 8);
         printf("3]%x\n", _address);
         this->_address |= static_cast<uint32_t>(d);
         printf("4]%x\n", _address);
@@ -271,7 +271,7 @@ public:
         address.sin_addr.s_addr = htonl( destination.GetAddress() );
         address.sin_port = htons( static_cast<uint16_t>(destination.GetPort()) );
 
-        int sent_bytes = sendto( socket, data, size, 0, (sockaddr*)(&address), sizeof(sockaddr_in) );
+        int sent_bytes = sendto( socket, data, size, 0, (sockaddr *)(&address), sizeof(sockaddr_in) );
 
         return sent_bytes == size;
     }
@@ -377,7 +377,7 @@ public:
         state = Listening;
     }
 
-    void Connect( const Address& addr )
+    void Connect( const Address &addr )
     {
         printf( "client connecting to %hhu.%hhu.%hhu.%hhu:%d\n",
                 addr.GetA(), addr.GetB(), addr.GetC(), addr.GetD(), addr.GetPort() );
@@ -449,11 +449,11 @@ public:
         packet[1] = static_cast<uchar_t>( ( protocolId >> 16 ) & 0xFF );
         packet[2] = static_cast<uchar_t>( ( protocolId >> 8 ) & 0xFF );
         packet[3] = static_cast<uchar_t>( ( protocolId ) & 0xFF );
-        #ifdef MEMCPY
+#ifdef MEMCPY
         memcpy( &packet[4], data, size );
-        #else
+#else
         std::copy( data, data + size, &packet[4] );
-        #endif
+#endif
         return socket.Send( address, packet, size + 4 );
     }
 
@@ -468,9 +468,9 @@ public:
         if ( bytes_read <= 4 )
             return 0;
         if ( packet[0] != static_cast<uchar_t>( protocolId >> 24 ) ||
-             packet[1] != static_cast<uchar_t>( ( protocolId >> 16 ) & 0xFF ) ||
-             packet[2] != static_cast<uchar_t>( ( protocolId >> 8 ) & 0xFF ) ||
-             packet[3] != static_cast<uchar_t>( protocolId & 0xFF ) )
+                packet[1] != static_cast<uchar_t>( ( protocolId >> 16 ) & 0xFF ) ||
+                packet[2] != static_cast<uchar_t>( ( protocolId >> 8 ) & 0xFF ) ||
+                packet[3] != static_cast<uchar_t>( protocolId & 0xFF ) )
             return 0;
         if ( mode == Server && !IsConnected() )
         {
@@ -489,11 +489,11 @@ public:
                 OnConnect();
             }
             timeoutAccumulator = 0.0f;
-            #ifdef MEMCPY
+#ifdef MEMCPY
             memcpy( data, &packet[4], bytes_read - 4 );
-            #else
+#else
             std::copy( &packet[4], &packet[4] + bytes_read - 4, data);
-            #endif
+#endif
             return bytes_read - 4;
         }
         return 0;
@@ -804,7 +804,7 @@ public:
         return max_sequence;
     }
 
-    void GetAcks( uint32_t **ACKs, uint32_t& ack_count )
+    void GetAcks( uint32_t **ACKs, uint32_t &ack_count )
     {
         *ACKs = &this->acks[0];
         ack_count = static_cast<uint32_t>(this->acks.size());
@@ -974,11 +974,11 @@ public:
         uint32_t ack = reliabilitySystem.GetRemoteSequence();
         uint32_t ack_bits = reliabilitySystem.GenerateAckBits();
         WriteHeader( packet, seq, ack, ack_bits );
-        #ifdef MEMCPY
+#ifdef MEMCPY
         memcpy( packet + header, data, size );
-        #else
+#else
         std::copy( data, data + size, &packet[header] );
-        #endif
+#endif
         if ( !Connection::SendPacket( packet, size + header ) )
             return false;
         reliabilitySystem.PacketSent( size );
@@ -1002,11 +1002,11 @@ public:
         ReadHeader( packet, packet_sequence, packet_ack, packet_ack_bits );
         reliabilitySystem.PacketReceived( packet_sequence, received_bytes - header );
         reliabilitySystem.ProcessAck( packet_ack, packet_ack_bits );
-        #ifdef MEMCPY
+#ifdef MEMCPY
         memcpy( data, packet + header, received_bytes - header );
-        #else
+#else
         std::copy( packet + header, packet + received_bytes, data);
-        #endif
+#endif
         return received_bytes - header;
     }
 

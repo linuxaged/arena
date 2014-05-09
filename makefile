@@ -1,9 +1,11 @@
-# makefile for Linux
-# or use command like:
-# clang++ -std=c++11  -stdlib=libc++ -Weverything Server.cpp
-# to compile single file
-# clang
+UNAME := $(shell uname)
+ifeq ($(UNAME), Linux)
+flags = -std=c++11 -stdlib=libstdc++ -Weverything -DDEBUG
+endif
+ifeq ($(UNAME), Darwin)
 flags = -std=c++11 -stdlib=libc++ -Weverything -DDEBUG
+endif
+
 # gcc -DMEMCPY
 # flags = -std=c++11 -Wall -DDEBUG -DMEMCPY
 % : %.cpp Net.h
