@@ -18,8 +18,8 @@ const unsigned short ClientPort = 30001;
 const int ProtocolId = 0x11112222;
 const float DeltaTime = 0.01f;
 const chrono::milliseconds DeltaTimeInMs(10);
-const float TimeOut = 0.1f;
-const int PacketSize = 256;
+const float TimeOut = 5.0f;
+const int PacketSize = 10;
 
 	// const int ServerPort = 30000;
 	// const int ClientPort = 30001;
@@ -213,8 +213,8 @@ int main( int argc, char * argv[] )
 		
 		while ( sendAccumulator > 1.0f / sendRate )
 		{
-			uchar_t packet[PacketSize];
-			memset( packet, 0, sizeof( packet ) );
+			uchar_t packet[PacketSize] = {'a','b','c','d','e','f','g','h','h','i'};
+			// memset( packet, 0, sizeof( packet ) );
 			connection.SendPacket( packet, sizeof( packet ) );
 			sendAccumulator -= 1.0f / sendRate;
 		}
