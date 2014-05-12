@@ -27,7 +27,11 @@ int main(int argc, char **argv)
       printf("-------------------------------------------------------\n");
       mesg[n] = 0;
       printf("Received the following:\n");
-      printf("%s", mesg);
+      for (int i = 0; i < 7; ++i)
+      {
+         printf("%02X", mesg[i]);
+      }
+      printf("\n");
       printf("-------------------------------------------------------\n");
    }
 }
