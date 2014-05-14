@@ -209,7 +209,7 @@ int main( int argc, char * argv[] )
 		
 		while ( sendAccumulator > 1.0f / sendRate )
 		{
-			uchar_t packet[PacketSize] = {'a','b','c','d','e','f','g','h','h','i'};
+			uchar_t packet[PacketSize] = {'a','b','c','d','e','f','g','h','i','j'};
 			// memset( packet, 0, sizeof( packet ) );
 			connection.SendPacket( packet, sizeof( packet ) );
 			sendAccumulator -= 1.0f / sendRate;
