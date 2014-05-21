@@ -9,8 +9,8 @@
 using namespace std;
 using namespace net;
 
-const unsigned short ServerPort = 30000;
-const unsigned short ClientPort = 30001;
+const unsigned short ServerPort = 19120;
+const unsigned short ClientPort = 19121;
 const int ProtocolId = 0x11112222;
 const float DeltaTime = 0.01f;
 const chrono::milliseconds DeltaTimeInMs(10);
