@@ -50,7 +50,13 @@ static_assert(sizeof(float) == 4, "sizeof(float) == 4");
 #include <vector>
 #include <map>
 #include <stack>
+
+#ifdef DEQUE
+#include <deque>
+#else
 #include <list>
+#endif
+
 #include <algorithm> // std::copy
 #include <functional>
 #include <cstring>
@@ -555,7 +561,11 @@ inline bool sequence_more_recent( uint32_t s1, uint32_t s2, uint32_t max_sequenc
     return (( s1 > s2 ) && ( s1 - s2 <= max_sequence / 2 )) || (( s2 > s1 ) && ( s2 - s1 > max_sequence / 2 ));
 }
 
+#ifdef DEQUE
+class PacketQueue : public std::deque<PacketData>
+#else
 class PacketQueue : public std::list<PacketData>
+#endif
 {
 public:
 
