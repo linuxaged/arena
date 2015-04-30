@@ -6,7 +6,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <cstring>
+#include <string.h>
 #include <vector>
 
 #define NET_UNIT_TEST
@@ -684,11 +684,11 @@ void test_payload()
 		if ( !client.IsConnecting() && client.ConnectFailed() )
 			break;
 		
-		uchar_t client_packet[] = "client to server";
-		client.SendPacket( client_packet, sizeof( client_packet ) );
+		const char client_packet[] = "client to server";
+		client.SendPacket( reinterpret_cast<const uchar_t*>(client_packet) , sizeof( client_packet ) );
 
-		uchar_t server_packet[] = "server to client";
-		server.SendPacket( server_packet, sizeof( server_packet ) );
+		const char server_packet[] = "server to client";
+		server.SendPacket( reinterpret_cast<const uchar_t*>(server_packet), sizeof( server_packet ) );
 		
 		while ( true )
 		{
@@ -698,7 +698,7 @@ void test_payload()
 			if ( bytes_read == 0 )
 				break;
 			// check( strcmp( packet, "server to client" ) == 0 );
-			check( strcmp( packet, server_packet ) == 0 );
+			check( strcmp( reinterpret_cast<const char*>(packet), server_packet ) == 0 );
 		}
 
 		while ( true )
@@ -714,7 +714,7 @@ void test_payload()
 			}
 			printf("\n");
 			// check( strcmp( packet, "client to server" ) == 0 );
-			check( strcmp( packet, client_packet ) == 0 );
+			check( strcmp( reinterpret_cast<const char*>(packet), client_packet ) == 0 );
 		}
 		
 		client.Update( DeltaTime );
@@ -794,7 +794,7 @@ void test_acks()
 				check( packet[i] == (uchar_t) i );
 		}
 		
-		int ack_count = 0;
+		uint32_t ack_count = 0;
 		unsigned int * acks = NULL;
 		client.GetReliabilitySystem().GetAcks( &acks, ack_count );
 		check( ack_count == 0 || ack_count != 0 && acks );
@@ -895,7 +895,7 @@ void test_ack_bits()
 					check( packet[i] == (uchar_t) i );
 			}
 
-			int ack_count = 0;
+			uint32_t ack_count = 0;
 			unsigned int * acks = NULL;
 			client.GetReliabilitySystem().GetAcks( &acks, ack_count );
 			check( ack_count == 0 || ack_count != 0 && acks );
@@ -925,7 +925,7 @@ void test_ack_bits()
 				check( packet[i] == (uchar_t) i );
 		}
 
-		int ack_count = 0;
+		uint32_t ack_count = 0;
 		unsigned int * acks = NULL;
 		server.GetReliabilitySystem().GetAcks( &acks, ack_count );
 		check( ack_count == 0 || ack_count != 0 && acks );
@@ -1019,7 +1019,7 @@ void test_packet_loss()
 					check( packet[i] == (uchar_t) i );
 			}
 
-			int ack_count = 0;
+			uint32_t ack_count = 0;
 			unsigned int * acks = NULL;
 			client.GetReliabilitySystem().GetAcks( &acks, ack_count );
 			check( ack_count == 0 || ack_count != 0 && acks );
@@ -1051,7 +1051,7 @@ void test_packet_loss()
 				check( packet[i] == (uchar_t) i );
 		}
 
-		int ack_count = 0;
+		uint32_t ack_count = 0;
 		unsigned int * acks = NULL;
 		server.GetReliabilitySystem().GetAcks( &acks, ack_count );
 		check( ack_count == 0 || ack_count != 0 && acks );
@@ -1159,7 +1159,7 @@ void test_sequence_wrap_around()
 				check( packet[i] == (uchar_t) i );
 		}
 
-		int ack_count = 0;
+		uint32_t ack_count = 0;
 		unsigned int * acks = NULL;
 		client.GetReliabilitySystem().GetAcks( &acks, ack_count );
 		check( ack_count == 0 || ack_count != 0 && acks );
