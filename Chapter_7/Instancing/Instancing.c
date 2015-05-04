@@ -38,6 +38,7 @@
 #include <math.h>
 #include "esUtil.h"
 
+
 #ifdef _WIN32
 #define srandom srand
 #define random rand
@@ -217,6 +218,57 @@ void Update ( ESContext *esContext, float deltaTime )
    }
 
    glUnmapBuffer ( GL_ARRAY_BUFFER );
+}
+
+uint findCubeByPoint(ESContext *esContext, uint touchX, uint touchY)
+{
+    int height = esContext->width ;
+    int width = esContext->height;
+    char pixelColor[4] = {0,};
+    GLuint colorRenderbuffer;
+    GLuint framebuffer;
+    
+    glGenFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    glGenRenderbuffers(1, &colorRenderbuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
+    
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8, width, height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer);
+    
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE) {
+        printf("Framebuffer status: %d", (int)status);
+//        NSLog(@"Framebuffer status: %x", (int)status);
+        return 0;
+    }
+    
+    [self render:DM_SELECT];
+    
+    CGFloat scale = UIScreen.mainScreen.scale;
+    glReadPixels(point.x * scale, (height - (point.y * scale)), 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixelColor);
+    
+    glDeleteRenderbuffers(1, &colorRenderbuffer);
+    glDeleteFramebuffers(1, &framebuffer);
+    
+    return pixelColor[0];
+}
+
+void render(DrawMode mode)
+{
+    if (mode == DM_RENDER)
+        glClearColor(backgroundColor.r, backgroundColor.g,
+                     backgroundColor.b, 1.0f);
+        else
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            
+        /* Draw all pieces. */
+            for (int i = 0; i < [model->pieces count]; i++) {
+                Piece *p = [model->pieces objectAtIndex:i];
+                [self drawPiece:p mode:mode];
+            }
 }
 
 ///

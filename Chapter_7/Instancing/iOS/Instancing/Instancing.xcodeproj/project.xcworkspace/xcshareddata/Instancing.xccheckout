@@ -10,8 +10,6 @@
 	<string>Instancing</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>0BE73B4C73B92FB5600412F36E55C4C836DB6FA4</key>
-		<string>github.com:danginsburg/opengles3-book.git</string>
 		<key>6648A81EF8243963C00DA30827EBB1DF13E267BA</key>
 		<string>github.com:linuxaged/arena.git</string>
 	</dict>
@@ -19,8 +17,6 @@
 	<string>Chapter_7/Instancing/iOS/Instancing/Instancing.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>0BE73B4C73B92FB5600412F36E55C4C836DB6FA4</key>
-		<string>../../../../../../../opengles3-book</string>
 		<key>6648A81EF8243963C00DA30827EBB1DF13E267BA</key>
 		<string>../../../../../..</string>
 	</dict>
@@ -39,14 +35,6 @@
 			<string>6648A81EF8243963C00DA30827EBB1DF13E267BA</string>
 			<key>IDESourceControlWCCName</key>
 			<string>arena</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>0BE73B4C73B92FB5600412F36E55C4C836DB6FA4</string>
-			<key>IDESourceControlWCCName</key>
-			<string>opengles3-book</string>
 		</dict>
 	</array>
 </dict>
