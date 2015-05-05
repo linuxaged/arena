@@ -5,9 +5,16 @@
 /// integrator requires that we structure this class in such a
 /// way that all forces can be calculated from the current physics
 /// state at any time. See Cube::integrate for details.
+#ifndef CUBE_H
+#define CUBE_H
 
+#include "../Math/Mathematics.h"
+#include "../Math/Vector.h"
+#include "../Math/Matrix.h"
+#include "../Math/Quaternion.h"
 class Cube
 {
+    
 public:
 
     /// Physics state.
@@ -16,18 +23,18 @@ public:
     {
         /// primary physics state
 
-        Vector position;                ///< the position of the cube center of mass in world coordinates (meters).
-        Vector momentum;                ///< the momentum of the cube in kilogram meters per second.
-        Quaternion orientation;         ///< the orientation of the cube represented by a unit quaternion.
-        Vector angularMomentum;         ///< angular momentum vector.
+        Mathematics::Vector position;                ///< the position of the cube center of mass in world coordinates (meters).
+        Mathematics::Vector momentum;                ///< the momentum of the cube in kilogram meters per second.
+        Mathematics::Quaternion orientation;         ///< the orientation of the cube represented by a unit quaternion.
+        Mathematics::Vector angularMomentum;         ///< angular momentum vector.
 
         // secondary state
 
-        Vector velocity;                ///< velocity in meters per second (calculated from momentum).
-        Quaternion spin;                ///< quaternion rate of change in orientation.
-        Vector angularVelocity;         ///< angular velocity (calculated from angularMomentum).
-        Matrix bodyToWorld;             ///< body to world coordinates matrix.
-        Matrix worldToBody;             ///< world to body coordinates matrix.
+        Mathematics::Vector velocity;                ///< velocity in meters per second (calculated from momentum).
+        Mathematics::Quaternion spin;                ///< quaternion rate of change in orientation.
+        Mathematics::Vector angularVelocity;         ///< angular velocity (calculated from angularMomentum).
+        Mathematics::Matrix bodyToWorld;             ///< body to world coordinates matrix.
+        Mathematics::Matrix worldToBody;             ///< world to body coordinates matrix.
 
         /// constant state
 
@@ -44,8 +51,8 @@ public:
             velocity = momentum * inverseMass;
             angularVelocity = angularMomentum * inverseInertiaTensor;
             orientation.normalize();
-            spin = 0.5 * Quaternion(0, angularVelocity.x, angularVelocity.y, angularVelocity.z) * orientation;
-            Matrix translation;
+            spin = 0.5 * Mathematics::Quaternion(0, angularVelocity.x, angularVelocity.y, angularVelocity.z) * orientation;
+            Mathematics::Matrix translation;
             translation.translate(position);
             bodyToWorld = translation * orientation.matrix();
             worldToBody = bodyToWorld.inverse();
@@ -59,10 +66,10 @@ public:
         current.size = 1;
         current.mass = 1;
         current.inverseMass = 1.0f / current.mass;
-        current.position = Vector(2,0,0);
-        current.momentum = Vector(0,0,-10);
+        current.position = Mathematics::Vector(2,0,0);
+        current.momentum = Mathematics::Vector(0,0,-10);
         current.orientation.identity();
-        current.angularMomentum = Vector(0,0,0);
+        current.angularMomentum = Mathematics::Vector(0,0,0);
         current.inertiaTensor = current.mass * current.size * current.size * 1.0f / 6.0f;
         current.inverseInertiaTensor = 1.0f / current.inertiaTensor;
         current.recalculate();
@@ -84,6 +91,7 @@ public:
 
     void render(float alpha = 1.0f)
     {
+        /*
         glPushMatrix();
 
         // interpolate state with alpha for smooth animation
@@ -153,6 +161,7 @@ public:
         glDisable(GL_LIGHTING);
 
         glPopMatrix();
+         */
     }
 
 private:
@@ -182,10 +191,10 @@ private:
 
     struct Derivative
     {
-        Vector velocity;                ///< velocity is the derivative of position.
-        Vector force;                   ///< force in the derivative of momentum.
-        Quaternion spin;                ///< spin is the derivative of the orientation quaternion.
-        Vector torque;                  ///< torque is the derivative of angular momentum.
+        Mathematics::Vector velocity;                ///< velocity is the derivative of position.
+        Mathematics::Vector force;                   ///< force in the derivative of momentum.
+        Mathematics::Quaternion spin;                ///< spin is the derivative of the orientation quaternion.
+        Mathematics::Vector torque;                  ///< torque is the derivative of angular momentum.
     };
 
     /// Evaluate all derivative values for the physics state at time t.
@@ -244,7 +253,7 @@ private:
     /// its accuracy by detecting curvature in derivative values over the
     /// timestep so we need our force values to supply the curvature.
 
-    static void forces(const State &state, float t, Vector &force, Vector &torque)
+    static void forces(const State &state, float t, Mathematics::Vector &force, Mathematics::Vector &torque)
     {
         // attract towards origin
 
@@ -267,3 +276,5 @@ private:
         torque -= 0.2f * state.angularVelocity;
     }
 };
+
+#endif

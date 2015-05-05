@@ -76,6 +76,7 @@
 		9D0A5DB01AF89C5300122D15 /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
 		9D0A5DB11AF89C5300122D15 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		9D0A5DB31AF8A1C100122D15 /* Mathematics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mathematics.h; sourceTree = "<group>"; };
+		9D0A5DB51AF8C6A800122D15 /* Cube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cube.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +108,7 @@
 		7625BD7E17F3ADAB0019C421 = {
 			isa = PBXGroup;
 			children = (
+				9D0A5DB41AF8C6A800122D15 /* Physics */,
 				9D0A5DAE1AF89C5300122D15 /* Math */,
 				7625BD9417F3ADAB0019C421 /* Instancing */,
 				7625BDBA17F3ADAB0019C421 /* InstancingTests */,
@@ -207,6 +209,15 @@
 			);
 			name = Math;
 			path = ../../../../Math;
+			sourceTree = "<group>";
+		};
+		9D0A5DB41AF8C6A800122D15 /* Physics */ = {
+			isa = PBXGroup;
+			children = (
+				9D0A5DB51AF8C6A800122D15 /* Cube.h */,
+			);
+			name = Physics;
+			path = ../../../../Physics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

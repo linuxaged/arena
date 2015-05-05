@@ -1,3 +1,6 @@
+#ifndef VECTOR_H
+#define VECTOR_H
+
 #include "Mathematics.h"
 namespace Mathematics
 {
@@ -293,3 +296,5 @@ namespace Mathematics
         return a;
     }
 }
+
+#endif

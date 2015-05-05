@@ -120,13 +120,50 @@ extern void esMain( ESContext *esContext );
     }
 }
 
+const float dt = 0.01f;
+
+float t = 0.0f;
+float accumulator = 0.0f;
+float currentTime = 0.0f;
 
 - (void)update
 {
+
+    
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        // update current time
+        double newTime = CACurrentMediaTime();
+//        float newTime = time();
+        float deltaTime = newTime - currentTime;
+        
+        if (deltaTime<=0.0f)
+            return;
+        
+        currentTime = newTime;
+        
+        // update discrete time
+        
+        accumulator += deltaTime;
+        
+        while (accumulator>=dt)
+        {
+//            cube.update(t, dt);
+            _esContext.fixedUpdateFunc( &_esContext, t, self.timeSinceLastUpdate );
+            accumulator -= dt;
+            t += dt;
+        }
+        
+//        cube.render();
+    
+    
     if ( _esContext.updateFunc )
     {
         _esContext.updateFunc( &_esContext, self.timeSinceLastUpdate );
     }
+    
+    
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect

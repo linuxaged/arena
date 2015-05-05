@@ -1,3 +1,6 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
 #include "Mathematics.h"
 namespace Mathematics
 {
@@ -876,3 +879,5 @@ namespace Mathematics
         return a;
     }
 }
+
+#endif
