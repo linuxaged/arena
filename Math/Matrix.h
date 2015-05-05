@@ -1,3 +1,4 @@
+#include "Mathematics.h"
 namespace Mathematics
 {
     /// 4x4 matrix class.
@@ -19,7 +20,7 @@ namespace Mathematics
     /// is D, C, B, A. Alternatively, you can view transforms as changing
     /// coordinate system, then the coordinate systems are changed
     /// in order A, B, C, D.
-
+    
     class Matrix
     {
     public:

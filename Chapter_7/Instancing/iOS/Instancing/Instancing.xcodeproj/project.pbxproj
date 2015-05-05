@@ -72,6 +72,10 @@
 		7625BDD517F3ADD60019C421 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7625BDD617F3ADD60019C421 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7625BDD717F3ADD60019C421 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9D0A5DAF1AF89C5300122D15 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		9D0A5DB01AF89C5300122D15 /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
+		9D0A5DB11AF89C5300122D15 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		9D0A5DB31AF8A1C100122D15 /* Mathematics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mathematics.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,7 @@
 		7625BD7E17F3ADAB0019C421 = {
 			isa = PBXGroup;
 			children = (
+				9D0A5DAE1AF89C5300122D15 /* Math */,
 				7625BD9417F3ADAB0019C421 /* Instancing */,
 				7625BDBA17F3ADAB0019C421 /* InstancingTests */,
 				7625BD8917F3ADAB0019C421 /* Frameworks */,
@@ -190,6 +195,18 @@
 			);
 			name = iOS;
 			path = ../../../../../Common/Source/iOS;
+			sourceTree = "<group>";
+		};
+		9D0A5DAE1AF89C5300122D15 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				9D0A5DB31AF8A1C100122D15 /* Mathematics.h */,
+				9D0A5DAF1AF89C5300122D15 /* Matrix.h */,
+				9D0A5DB01AF89C5300122D15 /* Quaternion.h */,
+				9D0A5DB11AF89C5300122D15 /* Vector.h */,
+			);
+			name = Math;
+			path = ../../../../Math;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

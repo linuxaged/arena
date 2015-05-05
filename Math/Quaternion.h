@@ -1,3 +1,4 @@
+#include "Mathematics.h"
 namespace Mathematics
 {
     /// A quaternion.

@@ -1,3 +1,4 @@
+#include "Mathematics.h"
 namespace Mathematics
 {
     /// A vector in 3-space.
@@ -5,7 +6,7 @@ namespace Mathematics
     /// use with 4x4 matrices. This is less than ideal and in the future we intend
     /// to templatize this class, optimize it with template metaprogramming and
     /// offer a range of pre-fab vector classes Vector<2>, Vector<3>, Vector<4> etc.
-
+    
     class Vector
     {
     public:
