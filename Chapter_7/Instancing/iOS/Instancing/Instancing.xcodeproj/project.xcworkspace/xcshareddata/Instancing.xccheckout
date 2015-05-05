@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>D52DDC28-72B5-4C29-AEF3-6E82AA4D9B75</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Instancing</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>6648A81EF8243963C00DA30827EBB1DF13E267BA</key>
 		<string>github.com:linuxaged/arena.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Chapter_7/Instancing/iOS/Instancing/Instancing.xcodeproj</string>
+	<string>Chapter_7/Instancing/iOS/Instancing/Instancing.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>6648A81EF8243963C00DA30827EBB1DF13E267BA</key>

@@ -21,7 +21,7 @@
 		7625BDB717F3ADAB0019C421 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7625BD8E17F3ADAB0019C421 /* UIKit.framework */; };
 		7625BDBF17F3ADAB0019C421 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7625BDBD17F3ADAB0019C421 /* InfoPlist.strings */; };
 		7625BDC117F3ADAB0019C421 /* InstancingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7625BDC017F3ADAB0019C421 /* InstancingTests.m */; };
-		7625BDCB17F3ADC90019C421 /* Instancing.c in Sources */ = {isa = PBXBuildFile; fileRef = 7625BDCA17F3ADC90019C421 /* Instancing.c */; };
+		7625BDCB17F3ADC90019C421 /* Instancing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7625BDCA17F3ADC90019C421 /* Instancing.cpp */; };
 		7625BDD817F3ADD60019C421 /* esShader.c in Sources */ = {isa = PBXBuildFile; fileRef = 7625BDCC17F3ADD60019C421 /* esShader.c */; };
 		7625BDD917F3ADD60019C421 /* esShapes.c in Sources */ = {isa = PBXBuildFile; fileRef = 7625BDCD17F3ADD60019C421 /* esShapes.c */; };
 		7625BDDA17F3ADD60019C421 /* esTransform.c in Sources */ = {isa = PBXBuildFile; fileRef = 7625BDCE17F3ADD60019C421 /* esTransform.c */; };
@@ -60,7 +60,7 @@
 		7625BDBC17F3ADAB0019C421 /* InstancingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InstancingTests-Info.plist"; sourceTree = "<group>"; };
 		7625BDBE17F3ADAB0019C421 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7625BDC017F3ADAB0019C421 /* InstancingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstancingTests.m; sourceTree = "<group>"; };
-		7625BDCA17F3ADC90019C421 /* Instancing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Instancing.c; path = ../../../Instancing.c; sourceTree = "<group>"; };
+		7625BDCA17F3ADC90019C421 /* Instancing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Instancing.cpp; path = ../../../Instancing.cpp; sourceTree = "<group>"; };
 		7625BDCC17F3ADD60019C421 /* esShader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = esShader.c; path = ../../../../../Common/Source/esShader.c; sourceTree = "<group>"; };
 		7625BDCD17F3ADD60019C421 /* esShapes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = esShapes.c; path = ../../../../../Common/Source/esShapes.c; sourceTree = "<group>"; };
 		7625BDCE17F3ADD60019C421 /* esTransform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = esTransform.c; path = ../../../../../Common/Source/esTransform.c; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 		7625BD9417F3ADAB0019C421 /* Instancing */ = {
 			isa = PBXGroup;
 			children = (
-				7625BDCA17F3ADC90019C421 /* Instancing.c */,
+				7625BDCA17F3ADC90019C421 /* Instancing.cpp */,
 				7625BDCC17F3ADD60019C421 /* esShader.c */,
 				7625BDCD17F3ADD60019C421 /* esShapes.c */,
 				7625BDCE17F3ADD60019C421 /* esTransform.c */,
@@ -293,7 +293,7 @@
 				7625BDDF17F3ADD60019C421 /* ViewController.m in Sources */,
 				7625BDD817F3ADD60019C421 /* esShader.c in Sources */,
 				7625BDDD17F3ADD60019C421 /* FileWrapper.m in Sources */,
-				7625BDCB17F3ADC90019C421 /* Instancing.c in Sources */,
+				7625BDCB17F3ADC90019C421 /* Instancing.cpp in Sources */,
 				7625BDDC17F3ADD60019C421 /* AppDelegate.m in Sources */,
 				7625BDDA17F3ADD60019C421 /* esTransform.c in Sources */,
 				7625BDD917F3ADD60019C421 /* esShapes.c in Sources */,
@@ -519,6 +519,7 @@
 				7625BDC617F3ADAB0019C421 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7625BDC717F3ADAB0019C421 /* Build configuration list for PBXNativeTarget "InstancingTests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +528,7 @@
 				7625BDC917F3ADAB0019C421 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
