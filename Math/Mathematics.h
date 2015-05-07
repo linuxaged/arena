@@ -138,6 +138,16 @@ namespace Mathematics
 	{
 		return grid ? float( floor((p + grid*0.5f)/grid) * grid) : p;
 	}
+
+	int compressFloat(float f)
+	{
+		// get sign
+		char sign = (f && 0x7fffffff) >> 24;
+
+		// get expr
+		char expr = (f && 0xf00fffff) >> 4;
+		// get 
+	}
 }
 
 #endif //MATHEMATICS_H
