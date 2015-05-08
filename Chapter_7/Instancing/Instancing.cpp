@@ -38,6 +38,7 @@
 #include <math.h>
 #include "esUtil.h"
 
+#include "../../Physics/Cube.h"
 
 #ifdef _WIN32
 #define srandom srand
@@ -49,6 +50,7 @@
 #define POSITION_LOC    0
 #define COLOR_LOC       1
 #define MVP_LOC         2
+
 
 typedef struct
 {
@@ -77,7 +79,7 @@ int Init ( ESContext *esContext )
    GLfloat *positions;
    GLuint *indices;
 
-   UserData *userData = esContext->userData;
+   UserData *userData = (UserData *) esContext->userData;
    const char vShaderStr[] =
       "#version 300 es                             \n"
       "layout(location = 0) in vec4 a_position;    \n"
@@ -218,57 +220,7 @@ void Update ( ESContext *esContext, float deltaTime )
    }
 
    glUnmapBuffer ( GL_ARRAY_BUFFER );
-}
 
-uint findCubeByPoint(ESContext *esContext, uint touchX, uint touchY)
-{
-    int height = esContext->width ;
-    int width = esContext->height;
-    char pixelColor[4] = {0,};
-    GLuint colorRenderbuffer;
-    GLuint framebuffer;
-    
-    glGenFramebuffers(1, &framebuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-    glGenRenderbuffers(1, &colorRenderbuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
-    
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8, width, height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer);
-    
-    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    if (status != GL_FRAMEBUFFER_COMPLETE) {
-        printf("Framebuffer status: %d", (int)status);
-//        NSLog(@"Framebuffer status: %x", (int)status);
-        return 0;
-    }
-    
-    [self render:DM_SELECT];
-    
-    CGFloat scale = UIScreen.mainScreen.scale;
-    glReadPixels(point.x * scale, (height - (point.y * scale)), 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixelColor);
-    
-    glDeleteRenderbuffers(1, &colorRenderbuffer);
-    glDeleteFramebuffers(1, &framebuffer);
-    
-    return pixelColor[0];
-}
-
-void render(DrawMode mode)
-{
-    if (mode == DM_RENDER)
-        glClearColor(backgroundColor.r, backgroundColor.g,
-                     backgroundColor.b, 1.0f);
-        else
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            
-        /* Draw all pieces. */
-            for (int i = 0; i < [model->pieces count]; i++) {
-                Piece *p = [model->pieces objectAtIndex:i];
-                [self drawPiece:p mode:mode];
-            }
 }
 
 ///
@@ -276,7 +228,7 @@ void render(DrawMode mode)
 //
 void Draw ( ESContext *esContext )
 {
-   UserData *userData = esContext->userData;
+   UserData *userData = (UserData *)esContext->userData;
 
    // Set the viewport
    glViewport ( 0, 0, esContext->width, esContext->height );
@@ -332,7 +284,7 @@ void Draw ( ESContext *esContext )
 //
 void Shutdown ( ESContext *esContext )
 {
-   UserData *userData = esContext->userData;
+   UserData *userData = (UserData *)esContext->userData;
 
    glDeleteBuffers ( 1, &userData->positionVBO );
    glDeleteBuffers ( 1, &userData->colorVBO );
@@ -343,22 +295,30 @@ void Shutdown ( ESContext *esContext )
    glDeleteProgram ( userData->programObject );
 }
 
+Cube cube;
 
-int esMain ( ESContext *esContext )
-{
-   esContext->userData = malloc ( sizeof ( UserData ) );
-
-   esCreateWindow ( esContext, "Instancing", 640, 480, ES_WINDOW_RGB | ES_WINDOW_DEPTH );
-
-   if ( !Init ( esContext ) )
-   {
-      return GL_FALSE;
-   }
-
-   esRegisterShutdownFunc ( esContext, Shutdown );
-   esRegisterUpdateFunc ( esContext, Update );
-   esRegisterDrawFunc ( esContext, Draw );
-
-   return GL_TRUE;
+#ifdef __cplusplus
+extern "C" {
+#endif
+    int esMain ( ESContext *esContext )
+    {
+        esContext->userData = malloc ( sizeof ( UserData ) );
+        
+        esCreateWindow ( esContext, "Instancing", 640, 480, ES_WINDOW_RGB | ES_WINDOW_DEPTH );
+        
+        if ( !Init ( esContext ) )
+        {
+            return GL_FALSE;
+        }
+        
+        esRegisterShutdownFunc ( esContext, Shutdown );
+        esRegisterUpdateFunc ( esContext, Update );
+        esRegisterDrawFunc ( esContext, Draw );
+        esRegisterFixedUpdateFunc( esContext, cube.update);
+        
+        
+        return GL_TRUE;
+    }
+#ifdef __cplusplus
 }
-
+#endif

@@ -1,3 +1,7 @@
+#ifndef QUATERNION_H
+#define QUATERNION_H
+
+#include "Mathematics.h"
 namespace Mathematics
 {
     /// A quaternion.
@@ -496,3 +500,5 @@ namespace Mathematics
         return a * beta + b * alpha;
     }
 }
+
+#endif
